@@ -14,4 +14,3 @@ include_directories(.)
 include_directories(${THIRD_PARTY_DIRECTORY})
 
 add_subdirectory(chernoengine2/main)
-add_subdirectory(chernoengine2/local_tests)

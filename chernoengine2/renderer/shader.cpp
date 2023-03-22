@@ -33,24 +33,34 @@ void Shader::CheckCompileErrors(uint32_t shader_id, const std::string& type) {
     }
 }
 
-Shader::Shader(const char *vertex_path, const char *fragment_path) {
-    // 1. read vertex and fragment source code from files
-    std::ifstream vertex_file(vertex_path);
-    std::ifstream fragment_file(fragment_path);
-    std::stringstream vertex_stream, fragment_stream;
-    std::string vertex_code, fragment_code;
-    try {
-        // 1.1 ensure std::ifstream objects can throw exceptions
-        vertex_file.exceptions(std::ifstream::failbit);
-        fragment_file.exceptions(std::ifstream::failbit);
-        vertex_stream << vertex_file.rdbuf();
-        fragment_stream << fragment_file.rdbuf();
-        // 1.2 get the text source code out of the string streams
-        vertex_code = vertex_stream.str();
-        fragment_code = fragment_stream.str();
-    } catch (const std::ifstream::failure& e) {
-        LOG_CORE_ERROR("ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: {0}", e.what());
+Shader::Shader(const std::string& filepath) {
+    // 1. divide vertex and fragment part
+    enum class ShaderType {
+        NONE = -1, VERTEX = 0, FRAGMENT = 1
+    };
+    std::ifstream stream(filepath);
+    std::string line;
+    std::stringstream ss[2];
+    ShaderType type = ShaderType::NONE;
+    while (getline(stream, line)) {
+        if (line.find("#shader") != std::string::npos) {
+            if (line.find("vertex") != std::string::npos) {
+                type = ShaderType::VERTEX;
+            } else if (line.find("fragment") != std::string::npos) {
+                type = ShaderType::FRAGMENT;
+            } else {
+                LOG_CORE_WARN("Unknown shader: {0}", line);
+            }
+        } else {
+            if (type == ShaderType::NONE) {
+                LOG_CORE_ERROR("No shader defined");
+            } else {
+                ss[(int) type] << line << '\n';
+            }
+        }
     }
+    std::string vertex_code = ss[(int) ShaderType::VERTEX].str();
+    std::string fragment_code = ss[(int) ShaderType::FRAGMENT].str();
 
     // 2. convert, compile and link sources to shader program
     // 2.1 convert string to c str

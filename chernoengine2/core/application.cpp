@@ -26,6 +26,9 @@ Application::Application() {
     window_ = Window::Create();
     window_->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
+    imgui_layer_ = new ImguiLayer;
+    PushOverlay(imgui_layer_);
+
     glGenVertexArrays(1, &va_);
     glBindVertexArray(va_);
 
@@ -48,7 +51,7 @@ Application::Application() {
     int indices[] = {0, 1, 2};
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    shader_ = std::make_unique<Shader>("GLSL/main.vs", "GLSL/main.fs");
+    shader_ = std::make_unique<Shader>("GLSL/main.shader");
 }
 
 void Application::Run() {
@@ -60,9 +63,14 @@ void Application::Run() {
         glBindVertexArray(va_);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 
-        for(Layer *layer : layer_stack_){
+        for (Layer *layer: layer_stack_) {
             layer->OnUpdate();
         }
+
+        imgui_layer_->Begin();
+        for (Layer *layer: layer_stack_)
+            layer->OnImguiRender();
+        imgui_layer_->End();
 
         window_->OnUpdate();
     }

@@ -13,7 +13,7 @@ namespace chernoengine2 {
 
 class Shader {
 public:
-    Shader(const char *vertex_path, const char *fragment_path);
+    explicit Shader(const std::string& filepath);
 
     void Bind() const;
 

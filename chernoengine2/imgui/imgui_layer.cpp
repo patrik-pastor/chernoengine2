@@ -17,40 +17,66 @@ namespace chernoengine2 {
 ImguiLayer::ImguiLayer() : Layer("ImguiLayer") {}
 
 void ImguiLayer::OnAttach() {
-    // 1.1 Imgui Context
+    IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+    //io.ConfigViewportsNoAutoMerge = true;
+    //io.ConfigViewportsNoTaskBarIcon = true;
+
+    // Setup Dear ImGui style
     ImGui::StyleColorsDark();
+    //ImGui::StyleColorsLight();
 
-    // 1.2 Imgui flags
-    ImGuiIO& io = ImGui::GetIO();
-    io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
-    io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
+    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+    ImGuiStyle &style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+        style.WindowRounding = 0.0f;
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
 
-    // 1.3 Imgui init for opengl
-    ImGui_ImplOpenGL3_Init("#version 410");
+    // Setup Platform/Renderer bindings
+    auto *window = static_cast<GLFWwindow*>(Application::GetInstance().GetWindow().GetNativeWindow());
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
 }
 
-void ImguiLayer::OnUpdate() {
-    // 1.1 set window size for imgui
-    ImGuiIO& io = ImGui::GetIO();
+void ImguiLayer::OnDetach() {
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+}
+
+void ImguiLayer::Begin() {
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+}
+
+void ImguiLayer::End() {
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
     Application& app = Application::GetInstance();
     io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
-    // 1.2 new frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui::NewFrame();
-
-    // 1.3 imgui demo window
-    static bool show = true;
-    ImGui::ShowDemoWindow(&show);
-
-    // 1.4 imgui render
+    // Rendering
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        GLFWwindow* backup_current_context = glfwGetCurrentContext();
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+        glfwMakeContextCurrent(backup_current_context);
+    }
 }
 
-void ImguiLayer::OnEvent(Event& event) {
-    Layer::OnEvent(event);
+void ImguiLayer::OnImguiRender() {
+    static bool show = true;
+    ImGui::ShowDemoWindow(&show);
 }
 
 

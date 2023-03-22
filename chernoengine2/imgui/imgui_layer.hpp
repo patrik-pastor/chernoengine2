@@ -15,12 +15,13 @@ public:
 
     void OnAttach() override;
 
-    void OnUpdate() override;
+    void OnDetach() override;
 
-    void OnEvent(Event& event) override;
+    void Begin();
 
-private:
-    float time_ = 0.0f;
+    void End();
+
+    void OnImguiRender() override;
 };
 
 } // chernoengine2

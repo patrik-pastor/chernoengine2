@@ -10,6 +10,7 @@
 #include <chernoengine2/events/application_event.hpp>
 #include <chernoengine2/core/layer_stack.hpp>
 #include <chernoengine2/renderer/shader.hpp>
+#include <chernoengine2/imgui/imgui_layer.hpp>
 
 namespace chernoengine2 {
 
@@ -41,6 +42,8 @@ private:
     Window *window_;
     bool running_ = true;
     LayerStack layer_stack_;
+    ImguiLayer *imgui_layer_;
+
     uint32_t va_, vb_, ib_;
     std::unique_ptr<Shader> shader_;
 };
