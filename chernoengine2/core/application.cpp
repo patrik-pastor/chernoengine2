@@ -8,6 +8,8 @@
 #include <GLFW/glfw3.h>
 
 #include <chernoengine2/core/log.hpp>
+#include <chernoengine2/renderer/shader.hpp>
+#include <memory>
 
 namespace chernoengine2 {
 
@@ -45,6 +47,8 @@ Application::Application() {
 
     int indices[] = {0, 1, 2};
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    shader_ = std::make_unique<Shader>("GLSL/main.vs", "GLSL/main.fs");
 }
 
 void Application::Run() {
@@ -52,8 +56,13 @@ void Application::Run() {
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        shader_->Bind();
         glBindVertexArray(va_);
         glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+
+        for(Layer *layer : layer_stack_){
+            layer->OnUpdate();
+        }
 
         window_->OnUpdate();
     }
@@ -93,6 +102,14 @@ void Application::PushLayer(Layer *layer) {
 void Application::PushOverlay(Layer *layer) {
     layer_stack_.PushOverlay(layer);
     layer->OnAttach();
+}
+
+Application& Application::GetInstance() {
+    return *application_instance_;
+}
+
+Window& Application::GetWindow() const {
+    return *window_;
 }
 
 } // chernoengine2

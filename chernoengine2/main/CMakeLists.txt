@@ -1,6 +1,15 @@
+include_directories(${THIRD_PARTY_DIRECTORY}/imgui)
 find_package(spdlog)
 add_executable(main
         ${THIRD_PARTY_DIRECTORY}/glad/glad.c
+
+        ${THIRD_PARTY_DIRECTORY}/imgui/imgui.cpp
+        ${THIRD_PARTY_DIRECTORY}/imgui/imgui_draw.cpp
+        ${THIRD_PARTY_DIRECTORY}/imgui/imgui_tables.cpp
+        ${THIRD_PARTY_DIRECTORY}/imgui/imgui_widgets.cpp
+        ${THIRD_PARTY_DIRECTORY}/imgui/imgui_demo.cpp
+        ${THIRD_PARTY_DIRECTORY}/imgui/backends/imgui_impl_glfw.cpp
+        ${THIRD_PARTY_DIRECTORY}/imgui/backends/imgui_impl_opengl3.cpp
 
         ../core/log.cpp
         ../core/window.cpp
@@ -16,6 +25,9 @@ add_executable(main
 
         ../renderer/graphics_context.cpp
         ../renderer/opengl_context.cpp
+        ../renderer/shader.cpp
+
+        ../imgui/imgui_layer.cpp
 
         main.cpp)
 target_link_libraries(main PRIVATE spdlog::spdlog glfw)
