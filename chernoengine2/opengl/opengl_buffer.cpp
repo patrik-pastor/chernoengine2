@@ -27,6 +27,14 @@ void OpenglVertexBuffer::UnBind() const {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+void OpenglVertexBuffer::SetLayout(const BufferLayout& layout) {
+    layout_ = layout;
+}
+
+const BufferLayout& OpenglVertexBuffer::GetLayout() const {
+    return layout_;
+}
+
 OpenglIndexBuffer::OpenglIndexBuffer(int *indices, int count) : count_(count) {
     glGenBuffers(1, &renderer_id_);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, renderer_id_);

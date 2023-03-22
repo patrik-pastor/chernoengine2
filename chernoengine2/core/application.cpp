@@ -34,14 +34,32 @@ Application::Application() {
     glBindVertexArray(va_);
 
     float vertices[] = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.0f, 0.5f, 0.0f
+            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+            0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
     };
-    vb_ = VertexBuffer::Create(vertices, sizeof(vertices));
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+    vb_ = VertexBuffer::Create(vertices, sizeof(vertices));
+    {
+        BufferLayout layout = {
+                {"a_pos",   ShaderDataType::Float3},
+                {"a_color", ShaderDataType::Float4}
+        };
+        vb_->SetLayout(layout);
+    }
+    int index = 0;
+    for (const auto& element: vb_->GetLayout()) {
+        glEnableVertexAttribArray(index);
+        glVertexAttribPointer(
+                index,
+                element.component_count,
+                ShaderDataTypeToOpenglBaseType(element.type),
+                element.normalized ? GL_TRUE : GL_FALSE,
+                vb_->GetLayout().GetStride(),
+                reinterpret_cast<const void *>(element.offset)
+        );
+        index++;
+    }
 
     int indices[] = {0, 1, 2};
     ib_ = IndexBuffer::Create(indices, 3);
