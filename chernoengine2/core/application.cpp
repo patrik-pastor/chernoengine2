@@ -9,6 +9,7 @@
 
 #include <chernoengine2/core/log.hpp>
 #include <chernoengine2/renderer/shader.hpp>
+#include <chernoengine2/opengl/opengl_buffer.hpp>
 #include <memory>
 
 namespace chernoengine2 {
@@ -32,24 +33,18 @@ Application::Application() {
     glGenVertexArrays(1, &va_);
     glBindVertexArray(va_);
 
-    glGenBuffers(1, &vb_);
-    glBindBuffer(GL_ARRAY_BUFFER, vb_);
-
     float vertices[] = {
             -0.5f, -0.5f, 0.0f,
             0.5f, -0.5f, 0.0f,
             0.0f, 0.5f, 0.0f
     };
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    vb_ = VertexBuffer::Create(vertices, sizeof(vertices));
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-    glGenBuffers(1, &ib_);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib_);
-
     int indices[] = {0, 1, 2};
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    ib_ = IndexBuffer::Create(indices, 3);
 
     shader_ = std::make_unique<Shader>("GLSL/main.shader");
 }
@@ -61,7 +56,7 @@ void Application::Run() {
 
         shader_->Bind();
         glBindVertexArray(va_);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, ib_->GetCount(), GL_UNSIGNED_INT, nullptr);
 
         for (Layer *layer: layer_stack_) {
             layer->OnUpdate();

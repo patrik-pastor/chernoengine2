@@ -26,6 +26,10 @@ add_executable(main
         ../renderer/graphics_context.cpp
         ../renderer/opengl_context.cpp
         ../renderer/shader.cpp
+        ../renderer/renderer.cpp
+        ../renderer/buffer.cpp
+
+        ../opengl/opengl_buffer.cpp
 
         ../imgui/imgui_layer.cpp
 
