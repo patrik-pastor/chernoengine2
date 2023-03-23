@@ -12,6 +12,7 @@
 #include <chernoengine2/renderer/shader.hpp>
 #include <chernoengine2/renderer/buffer.hpp>
 #include <chernoengine2/renderer/vertex_array.hpp>
+#include <chernoengine2/renderer/orthographic_camera.hpp>
 #include <chernoengine2/imgui/imgui_layer.hpp>
 
 namespace chernoengine2 {
@@ -50,6 +51,7 @@ private:
     VertexArray *va_;
     VertexBuffer *vb_;
     IndexBuffer *ib_;
+    OrthographicCamera camera_;
 };
 
 } // chernoengine2

@@ -11,7 +11,7 @@ namespace chernoengine2 {
 
 Application *Application::application_instance_ = nullptr;
 
-Application::Application() {
+Application::Application() : camera_(-2.0f, 2.0f, -2.0f, 2.0f) {
     Log::Init();
 
     if (application_instance_ != nullptr) {
@@ -56,8 +56,11 @@ void Application::Run() {
         RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
         RenderCommand::Clear();
 
-        shader_->Bind();
-        Renderer::Submit(va_);
+        camera_.SetRotation(90.0f);
+
+        Renderer::BeginScene(camera_);
+        Renderer::Submit(shader_, va_);
+        Renderer::EndScene();
 
         for (Layer *layer: layer_stack_) {
             layer->OnUpdate();
