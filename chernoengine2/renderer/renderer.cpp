@@ -6,10 +6,21 @@
 
 namespace chernoengine2 {
 
-RendererApi Renderer::renderer_api_ = RendererApi::OPENGL;
+RendererApi::Api Renderer::GetRendererApi() {
+    return RendererApi::GetApi();
+}
 
-RendererApi Renderer::GetRendererApi() {
-    return renderer_api_;
+void Renderer::BeginScene() {
+
+}
+
+void Renderer::EndScene() {
+
+}
+
+void Renderer::Submit(const VertexArray *vertex_array) {
+    vertex_array->Bind();
+    RenderCommand::DrawIndexed(vertex_array);
 }
 
 } // chernoengine2

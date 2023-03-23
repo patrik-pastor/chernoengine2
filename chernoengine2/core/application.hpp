@@ -11,6 +11,7 @@
 #include <chernoengine2/core/layer_stack.hpp>
 #include <chernoengine2/renderer/shader.hpp>
 #include <chernoengine2/renderer/buffer.hpp>
+#include <chernoengine2/renderer/vertex_array.hpp>
 #include <chernoengine2/imgui/imgui_layer.hpp>
 
 namespace chernoengine2 {
@@ -45,8 +46,8 @@ private:
     LayerStack layer_stack_;
     ImguiLayer *imgui_layer_;
 
-    uint32_t va_;
-    std::unique_ptr<Shader> shader_;
+    Shader *shader_;
+    VertexArray *va_;
     VertexBuffer *vb_;
     IndexBuffer *ib_;
 };

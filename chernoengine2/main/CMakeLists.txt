@@ -27,9 +27,14 @@ add_executable(main
         ../renderer/opengl_context.cpp
         ../renderer/shader.cpp
         ../renderer/renderer.cpp
+        ../renderer/renderer_api.cpp
+        ../renderer/render_command.cpp
         ../renderer/buffer.cpp
+        ../renderer/vertex_array.cpp
 
         ../opengl/opengl_buffer.cpp
+        ../opengl/opengl_vertex_array.cpp
+        ../opengl/opengl_renderer_api.cpp
 
         ../imgui/imgui_layer.cpp
 

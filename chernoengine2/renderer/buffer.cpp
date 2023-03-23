@@ -11,9 +11,9 @@ namespace chernoengine2 {
 
 VertexBuffer *VertexBuffer::Create(float *vertices, int size) {
     switch (Renderer::GetRendererApi()) {
-        case RendererApi::NONE:
+        case RendererApi::Api::NONE:
             LOG_CORE_ERROR("RendererApi::NONE is currently not supported");
-        case RendererApi::OPENGL:
+        case RendererApi::Api::OPENGL:
             return new OpenglVertexBuffer(vertices, size);
     }
     LOG_CORE_ERROR("Unknown RendererApi");
@@ -22,9 +22,9 @@ VertexBuffer *VertexBuffer::Create(float *vertices, int size) {
 
 IndexBuffer *IndexBuffer::Create(int *indices, int count) {
     switch (Renderer::GetRendererApi()) {
-        case RendererApi::NONE:
+        case RendererApi::Api::NONE:
             LOG_CORE_ERROR("RendererApi::NONE is currently not supported");
-        case RendererApi::OPENGL:
+        case RendererApi::Api::OPENGL:
             return new OpenglIndexBuffer(indices, count);
     }
     LOG_CORE_ERROR("Unknown RendererApi");

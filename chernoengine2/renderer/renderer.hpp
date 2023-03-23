@@ -5,18 +5,19 @@
 #ifndef CHERNOENGINE2_RENDERER_HPP
 #define CHERNOENGINE2_RENDERER_HPP
 
-namespace chernoengine2 {
+#include <chernoengine2/renderer/render_command.hpp>
 
-enum class RendererApi {
-    NONE = 0, OPENGL = 1
-};
+namespace chernoengine2 {
 
 class Renderer {
 public:
-    static RendererApi GetRendererApi();
+    static void BeginScene();
 
-private:
-    static RendererApi renderer_api_;
+    static void EndScene();
+
+    static void Submit(const VertexArray *vertex_array);
+
+    static RendererApi::Api GetRendererApi();
 };
 
 } // chernoengine2

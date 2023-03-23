@@ -4,13 +4,8 @@
 
 #include <chernoengine2/core/application.hpp>
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include <chernoengine2/core/log.hpp>
-#include <chernoengine2/renderer/shader.hpp>
-#include <chernoengine2/opengl/opengl_buffer.hpp>
-#include <memory>
+#include <chernoengine2/renderer/renderer.hpp>
 
 namespace chernoengine2 {
 
@@ -30,8 +25,7 @@ Application::Application() {
     imgui_layer_ = new ImguiLayer;
     PushOverlay(imgui_layer_);
 
-    glGenVertexArrays(1, &va_);
-    glBindVertexArray(va_);
+    va_ = VertexArray::Create();
 
     float vertices[] = {
             -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
@@ -47,34 +41,23 @@ Application::Application() {
         };
         vb_->SetLayout(layout);
     }
-    int index = 0;
-    for (const auto& element: vb_->GetLayout()) {
-        glEnableVertexAttribArray(index);
-        glVertexAttribPointer(
-                index,
-                element.component_count,
-                ShaderDataTypeToOpenglBaseType(element.type),
-                element.normalized ? GL_TRUE : GL_FALSE,
-                vb_->GetLayout().GetStride(),
-                reinterpret_cast<const void *>(element.offset)
-        );
-        index++;
-    }
+    va_->AddVertexBuffer(vb_);
 
     int indices[] = {0, 1, 2};
     ib_ = IndexBuffer::Create(indices, 3);
+    va_->SetIndexBuffer(ib_);
 
-    shader_ = std::make_unique<Shader>("GLSL/main.shader");
+    shader_ = new Shader("GLSL/main.shader");
 }
 
 void Application::Run() {
     while (IsRunning()) {
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+
+        RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
+        RenderCommand::Clear();
 
         shader_->Bind();
-        glBindVertexArray(va_);
-        glDrawElements(GL_TRIANGLES, ib_->GetCount(), GL_UNSIGNED_INT, nullptr);
+        Renderer::Submit(va_);
 
         for (Layer *layer: layer_stack_) {
             layer->OnUpdate();
