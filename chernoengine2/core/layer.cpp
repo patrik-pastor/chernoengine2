@@ -18,29 +18,44 @@ FirstExample::FirstExample() :
         Layer("FirstExample"),
         camera_(-2.0f, 2.0f, -2.0f, 2.0f),
         camera_position_(0.0f) {
-    va_ = VertexArray::Create();
 
-    float vertices[] = {
+    // TRIANGLE
+    triangle_va_ = VertexArray::Create();
+    float triangle_vertices[] = {
             -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
             0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
             0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
     };
+    triangle_vb_ = VertexBuffer::Create(triangle_vertices, sizeof(triangle_vertices));
+    BufferLayout layout = {
+            {"a_pos",   ShaderDataType::Float3},
+            {"a_color", ShaderDataType::Float4}
+    };
+    triangle_vb_->SetLayout(layout);
+    triangle_va_->AddVertexBuffer(triangle_vb_);
+    int triangle_indices[] = {0, 1, 2};
+    triangle_ib_ = IndexBuffer::Create(triangle_indices, 3);
+    triangle_va_->SetIndexBuffer(triangle_ib_);
+    triangle_shader_ = new Shader("GLSL/triangle.shader");
 
-    vb_ = VertexBuffer::Create(vertices, sizeof(vertices));
-    {
-        BufferLayout layout = {
-                {"a_pos",   ShaderDataType::Float3},
-                {"a_color", ShaderDataType::Float4}
-        };
-        vb_->SetLayout(layout);
-    }
-    va_->AddVertexBuffer(vb_);
+    //SQUARE
+    square_va_ = VertexArray::Create();
+    float square_vertices[] = {
+            -0.75f, -0.75f, 0.0f,
+            0.75f, -0.75f, 0.0f,
+            0.75f, 0.75f, 0.0f,
+            -0.75f, 0.75f, 0.0f
+    };
+    square_vb_ = VertexBuffer::Create(square_vertices, sizeof(square_vertices));
+    square_vb_->SetLayout({
+                                  {"a_pos", ShaderDataType::Float3}
+                          });
+    square_va_->AddVertexBuffer(square_vb_);
+    int square_indices[] = {0, 1, 2, 2, 3, 0};
+    square_ib_ = IndexBuffer::Create(square_indices, 6);
+    square_va_->SetIndexBuffer(square_ib_);
+    square_shader_ = new Shader("GLSL/square.shader");
 
-    int indices[] = {0, 1, 2};
-    ib_ = IndexBuffer::Create(indices, 3);
-    va_->SetIndexBuffer(ib_);
-
-    shader_ = new Shader("GLSL/main.shader");
 }
 
 void FirstExample::OnUpdate(float delta_time) {
@@ -54,10 +69,10 @@ void FirstExample::OnUpdate(float delta_time) {
     } else if (Input::IsKeyPressed(KEY_DOWN)) {
         camera_position_.y -= camera_move_speed_ * delta_time;
     }
-    if(Input::IsKeyPressed(KEY_A)){
+    if (Input::IsKeyPressed(KEY_A)) {
         camera_rotation_ += camera_rotation_speed_ * delta_time;
     }
-    if(Input::IsKeyPressed(KEY_D)){
+    if (Input::IsKeyPressed(KEY_D)) {
         camera_rotation_ -= camera_rotation_speed_ * delta_time;
     }
 
@@ -68,7 +83,8 @@ void FirstExample::OnUpdate(float delta_time) {
     camera_.SetRotation(camera_rotation_);
 
     Renderer::BeginScene(camera_);
-    Renderer::Submit(shader_, va_);
+    Renderer::Submit(square_shader_, square_va_);
+    Renderer::Submit(triangle_shader_, triangle_va_);
     Renderer::EndScene();
 }
 

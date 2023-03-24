@@ -10,6 +10,10 @@ OpenglVertexArray::OpenglVertexArray() {
     glGenVertexArrays(1, &renderer_id_);
 }
 
+OpenglVertexArray::~OpenglVertexArray() {
+    glDeleteVertexArrays(1, &renderer_id_);
+}
+
 void OpenglVertexArray::Bind() const {
     glBindVertexArray(renderer_id_);
 }
@@ -53,6 +57,7 @@ const std::vector<const VertexBuffer*>& OpenglVertexArray::GetVertexBuffers() co
 const IndexBuffer *OpenglVertexArray::GetIndexBuffer() const {
     return index_buffer_;
 }
+
 
 
 } // chernoengine2

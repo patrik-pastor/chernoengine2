@@ -92,28 +92,28 @@ void Shader::Bind() const {
     glUseProgram(id_);
 }
 
-void Shader::setBool(const std::string& name, bool value) const {
+void Shader::SetBool(const std::string& name, bool value) const {
     glUniform1i(glGetUniformLocation(id_, name.c_str()), value);
 }
 
-void Shader::setInt(const std::string& name, int value) const {
+void Shader::SetInt(const std::string& name, int value) const {
     glUniform1i(glGetUniformLocation(id_, name.c_str()), value);
 }
 
-void Shader::setFloat(const std::string& name, float value) const {
+void Shader::SetFloat(const std::string& name, float value) const {
     glUniform1f(glGetUniformLocation(id_, name.c_str()), value);
 }
 
-uint32_t Shader::getId() const {
+uint32_t Shader::GetId() const {
     return id_;
 }
 
-void Shader::setMat4(const std::string& name, const glm::mat4& mat) const {
-    glUniformMatrix4fv(glGetUniformLocation(getId(), name.c_str()), 1, GL_FALSE, &mat[0][0]);
+void Shader::SetMat4(const std::string& name, const glm::mat4& mat) const {
+    glUniformMatrix4fv(glGetUniformLocation(GetId(), name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
 
-void Shader::setVec4(const std::string& name, const glm::vec4& vec) const {
-    glUniform4f(glGetUniformLocation(getId(), name.c_str()), vec.x, vec.y, vec.z, vec.w);
+void Shader::SetVec4(const std::string& name, const glm::vec4& vec) const {
+    glUniform4f(glGetUniformLocation(GetId(), name.c_str()), vec.x, vec.y, vec.z, vec.w);
 }
 
 } // chernoengine2

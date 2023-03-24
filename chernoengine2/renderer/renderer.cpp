@@ -22,7 +22,7 @@ void Renderer::EndScene() {
 
 void Renderer::Submit(const Shader *shader, const VertexArray *vertex_array) {
     shader->Bind();
-    shader->setMat4("u_view_projection", scene_data_->view_projection_matrix);
+    shader->SetMat4("u_view_projection", scene_data_->view_projection_matrix);
 
     vertex_array->Bind();
     RenderCommand::DrawIndexed(vertex_array);

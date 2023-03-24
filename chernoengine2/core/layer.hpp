@@ -43,15 +43,20 @@ public:
     void OnUpdate(float delta_time) override;
 
 private:
-    Shader *shader_;
-    VertexArray *va_;
-    VertexBuffer *vb_;
-    IndexBuffer *ib_;
+    Shader *triangle_shader_;
+    VertexArray *triangle_va_;
+    VertexBuffer *triangle_vb_;
+    IndexBuffer *triangle_ib_;
+
+    Shader *square_shader_;
+    VertexArray *square_va_;
+    VertexBuffer *square_vb_;
+    IndexBuffer *square_ib_;
+
     OrthographicCamera camera_;
 
     glm::vec3 camera_position_;
     float camera_move_speed_ = 5.0f;
-
     float camera_rotation_ = 0.0f;
     float camera_rotation_speed_ = 180.0f;
 };

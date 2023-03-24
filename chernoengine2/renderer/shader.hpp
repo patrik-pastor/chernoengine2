@@ -17,17 +17,17 @@ public:
 
     void Bind() const;
 
-    void setBool(const std::string &name, bool value) const;
+    void SetBool(const std::string &name, bool value) const;
 
-    void setInt(const std::string &name, int value) const;
+    void SetInt(const std::string &name, int value) const;
 
-    void setFloat(const std::string &name, float value) const;
+    void SetFloat(const std::string &name, float value) const;
 
-    void setVec4(const std::string &name, const glm::vec4 &vec) const;
+    void SetVec4(const std::string &name, const glm::vec4 &vec) const;
 
-    void setMat4(const std::string &name, const glm::mat4 &mat) const;
+    void SetMat4(const std::string &name, const glm::mat4 &mat) const;
 
-    uint32_t getId() const;
+    uint32_t GetId() const;
 
 private:
     void CheckCompileErrors(uint32_t shader_id, const std::string &type);
