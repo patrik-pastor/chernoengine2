@@ -6,9 +6,9 @@
 #define CHERNOENGINE2_APPLICATION_HPP
 
 #include <chernoengine2/core/window.hpp>
+#include <chernoengine2/core/layer_stack.hpp>
 #include <chernoengine2/events/event.hpp>
 #include <chernoengine2/events/application_event.hpp>
-#include <chernoengine2/core/layer_stack.hpp>
 #include <chernoengine2/renderer/shader.hpp>
 #include <chernoengine2/renderer/buffer.hpp>
 #include <chernoengine2/renderer/vertex_array.hpp>
@@ -46,6 +46,7 @@ private:
     bool running_ = true;
     LayerStack layer_stack_;
     ImguiLayer *imgui_layer_;
+    float last_time_ = 0.0f;
 };
 
 } // chernoengine2

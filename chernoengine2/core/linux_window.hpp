@@ -27,6 +27,8 @@ public:
 
     int GetHeight() const override;
 
+    void SetVSync(bool enabled) override;
+
     void *GetNativeWindow() const override;
 
     void SetEventCallback(const EventCallbackFn& callback) override;
@@ -37,6 +39,7 @@ private:
         std::string title;
         int width;
         int height;
+        bool vsync;
         EventCallbackFn event_callback;
     } data_;
 };

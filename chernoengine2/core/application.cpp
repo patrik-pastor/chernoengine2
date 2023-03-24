@@ -28,8 +28,12 @@ Application::Application(){
 
 void Application::Run() {
     while (IsRunning()) {
+        float time = glfwGetTime();
+        float delta_time = time - last_time_;
+        last_time_ = time;
+
         for (Layer *layer: layer_stack_) {
-            layer->OnUpdate();
+            layer->OnUpdate(delta_time);
         }
 
         imgui_layer_->Begin();

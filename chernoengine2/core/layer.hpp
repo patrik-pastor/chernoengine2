@@ -26,7 +26,7 @@ public:
 
     virtual void OnDetach() {}
 
-    virtual void OnUpdate() {}
+    virtual void OnUpdate(float delta_time) {}
 
     virtual void OnImguiRender() {}
 
@@ -40,7 +40,7 @@ class FirstExample : public Layer {
 public:
     FirstExample();
 
-    void OnUpdate() override;
+    void OnUpdate(float delta_time) override;
 
 private:
     Shader *shader_;
@@ -50,10 +50,10 @@ private:
     OrthographicCamera camera_;
 
     glm::vec3 camera_position_;
-    float camera_move_speed_ = 0.1f;
+    float camera_move_speed_ = 5.0f;
 
     float camera_rotation_ = 0.0f;
-    float camera_rotation_speed_ = 2.0f;
+    float camera_rotation_speed_ = 180.0f;
 };
 
 } // chernoengine22

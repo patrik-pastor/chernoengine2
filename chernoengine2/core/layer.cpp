@@ -43,22 +43,22 @@ FirstExample::FirstExample() :
     shader_ = new Shader("GLSL/main.shader");
 }
 
-void FirstExample::OnUpdate() {
+void FirstExample::OnUpdate(float delta_time) {
     if (Input::IsKeyPressed(KEY_LEFT)) {
-        camera_position_.x -= camera_move_speed_;
+        camera_position_.x -= camera_move_speed_ * delta_time;
     } else if (Input::IsKeyPressed(KEY_RIGHT)) {
-        camera_position_.x += camera_move_speed_;
+        camera_position_.x += camera_move_speed_ * delta_time;
     }
     if (Input::IsKeyPressed(KEY_UP)) {
-        camera_position_.y += camera_move_speed_;
+        camera_position_.y += camera_move_speed_ * delta_time;
     } else if (Input::IsKeyPressed(KEY_DOWN)) {
-        camera_position_.y -= camera_move_speed_;
+        camera_position_.y -= camera_move_speed_ * delta_time;
     }
     if(Input::IsKeyPressed(KEY_A)){
-        camera_rotation_ += camera_rotation_speed_;
+        camera_rotation_ += camera_rotation_speed_ * delta_time;
     }
     if(Input::IsKeyPressed(KEY_D)){
-        camera_rotation_ -= camera_rotation_speed_;
+        camera_rotation_ -= camera_rotation_speed_ * delta_time;
     }
 
     RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});

@@ -42,6 +42,7 @@ LinuxWindow::LinuxWindow(const WindowProps& props){
     context_->Init();
 
     glfwSetWindowUserPointer(window_, &data_);
+    SetVSync(true);
 
     glfwSetWindowSizeCallback(window_, [](GLFWwindow *window, int width, int height) {
         WindowData data = *(WindowData *) glfwGetWindowUserPointer(window);
@@ -133,6 +134,15 @@ void *LinuxWindow::GetNativeWindow() const {
 
 void LinuxWindow::SetEventCallback(const Window::EventCallbackFn& callback) {
     data_.event_callback = callback;
+}
+
+void LinuxWindow::SetVSync(bool enabled) {
+    if(enabled){
+        glfwSwapInterval(1);
+    } else {
+        glfwSwapInterval(0);
+    }
+    data_.vsync = enabled;
 }
 
 } // chernoengine2
