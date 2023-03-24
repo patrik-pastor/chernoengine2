@@ -8,7 +8,11 @@
 #include <memory>
 #include <string>
 
+#include <glm/glm.hpp>
+
 #include <chernoengine2/events/event.hpp>
+#include <chernoengine2/renderer/renderer.hpp>
+#include <chernoengine2/events/key_event.hpp>
 
 namespace chernoengine2 {
 
@@ -32,12 +36,24 @@ private:
     std::string name_;
 };
 
-class ExampleLayer : public Layer {
+class FirstExample : public Layer {
 public:
-    ExampleLayer();
+    FirstExample();
+
     void OnUpdate() override;
 
-    void OnEvent(Event& event) override;
+private:
+    Shader *shader_;
+    VertexArray *va_;
+    VertexBuffer *vb_;
+    IndexBuffer *ib_;
+    OrthographicCamera camera_;
+
+    glm::vec3 camera_position_;
+    float camera_move_speed_ = 0.1f;
+
+    float camera_rotation_ = 0.0f;
+    float camera_rotation_speed_ = 2.0f;
 };
 
 } // chernoengine22

@@ -17,6 +17,7 @@ add_executable(main
         ../core/application.cpp
         ../core/layer.cpp
         ../core/layer_stack.cpp
+        ../core/input.cpp
 
         ../events/event.cpp
         ../events/application_event.cpp

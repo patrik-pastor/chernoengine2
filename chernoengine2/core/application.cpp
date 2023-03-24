@@ -11,7 +11,7 @@ namespace chernoengine2 {
 
 Application *Application::application_instance_ = nullptr;
 
-Application::Application() : camera_(-2.0f, 2.0f, -2.0f, 2.0f) {
+Application::Application(){
     Log::Init();
 
     if (application_instance_ != nullptr) {
@@ -20,48 +20,14 @@ Application::Application() : camera_(-2.0f, 2.0f, -2.0f, 2.0f) {
     application_instance_ = this;
 
     window_ = Window::Create();
-    window_->SetEventCallback(BIND_EVENT_FN(OnEvent));
+    window_->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
     imgui_layer_ = new ImguiLayer;
     PushOverlay(imgui_layer_);
-
-    va_ = VertexArray::Create();
-
-    float vertices[] = {
-            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-            0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-            0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
-    };
-
-    vb_ = VertexBuffer::Create(vertices, sizeof(vertices));
-    {
-        BufferLayout layout = {
-                {"a_pos",   ShaderDataType::Float3},
-                {"a_color", ShaderDataType::Float4}
-        };
-        vb_->SetLayout(layout);
-    }
-    va_->AddVertexBuffer(vb_);
-
-    int indices[] = {0, 1, 2};
-    ib_ = IndexBuffer::Create(indices, 3);
-    va_->SetIndexBuffer(ib_);
-
-    shader_ = new Shader("GLSL/main.shader");
 }
 
 void Application::Run() {
     while (IsRunning()) {
-
-        RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
-        RenderCommand::Clear();
-
-        camera_.SetRotation(90.0f);
-
-        Renderer::BeginScene(camera_);
-        Renderer::Submit(shader_, va_);
-        Renderer::EndScene();
-
         for (Layer *layer: layer_stack_) {
             layer->OnUpdate();
         }
@@ -78,7 +44,7 @@ void Application::Run() {
 void Application::OnEvent(Event& e) {
     LOG_CORE_INFO(e.ToString());
     EventDispatcher dispatcher(e);
-    dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+    dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
 
     for (auto it = layer_stack_.end(); it != layer_stack_.begin();) {
         (*--it)->OnEvent(e);

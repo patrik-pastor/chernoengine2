@@ -2,5 +2,6 @@
 
 int main(){
     chernoengine2::Application app;
+    app.PushLayer(new chernoengine2::FirstExample);
     app.Run();
 }

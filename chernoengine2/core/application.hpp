@@ -46,12 +46,6 @@ private:
     bool running_ = true;
     LayerStack layer_stack_;
     ImguiLayer *imgui_layer_;
-
-    Shader *shader_;
-    VertexArray *va_;
-    VertexBuffer *vb_;
-    IndexBuffer *ib_;
-    OrthographicCamera camera_;
 };
 
 } // chernoengine2
