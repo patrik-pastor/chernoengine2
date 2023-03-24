@@ -4,11 +4,11 @@
 
 #include <chernoengine2/core/layer.hpp>
 
-#include <chernoengine2/core/core.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <chernoengine2/core/key_codes.hpp>
 #include <chernoengine2/core/log.hpp>
 #include <chernoengine2/core/input.hpp>
-#include <chernoengine2/events/key_event.hpp>
 
 namespace chernoengine2 {
 
@@ -41,10 +41,10 @@ FirstExample::FirstExample() :
     //SQUARE
     square_va_ = VertexArray::Create();
     float square_vertices[] = {
-            -0.75f, -0.75f, 0.0f,
-            0.75f, -0.75f, 0.0f,
-            0.75f, 0.75f, 0.0f,
-            -0.75f, 0.75f, 0.0f
+            -0.5f, -0.5f, 0.0f,
+            0.5f, -0.5f, 0.0f,
+            0.5f, 0.5f, 0.0f,
+            -0.5f, 0.5f, 0.0f
     };
     square_vb_ = VertexBuffer::Create(square_vertices, sizeof(square_vertices));
     square_vb_->SetLayout({
@@ -59,6 +59,8 @@ FirstExample::FirstExample() :
 }
 
 void FirstExample::OnUpdate(float delta_time) {
+
+    // CAMERA TRANSLATION
     if (Input::IsKeyPressed(KEY_LEFT)) {
         camera_position_.x -= camera_move_speed_ * delta_time;
     } else if (Input::IsKeyPressed(KEY_RIGHT)) {
@@ -69,6 +71,8 @@ void FirstExample::OnUpdate(float delta_time) {
     } else if (Input::IsKeyPressed(KEY_DOWN)) {
         camera_position_.y -= camera_move_speed_ * delta_time;
     }
+
+    // CAMERA ROTATION
     if (Input::IsKeyPressed(KEY_A)) {
         camera_rotation_ += camera_rotation_speed_ * delta_time;
     }
@@ -83,8 +87,17 @@ void FirstExample::OnUpdate(float delta_time) {
     camera_.SetRotation(camera_rotation_);
 
     Renderer::BeginScene(camera_);
-    Renderer::Submit(square_shader_, square_va_);
+
+    glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+    for (int y = 0; y < 20; y++) {
+        for (int x = 0; x < 20; x++) {
+            glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
+            glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+            Renderer::Submit(square_shader_, square_va_, transform);
+        }
+    }
     Renderer::Submit(triangle_shader_, triangle_va_);
+
     Renderer::EndScene();
 }
 

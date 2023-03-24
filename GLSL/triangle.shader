@@ -8,12 +8,13 @@ out vec3 v_pos;
 out vec4 v_color;
 
 uniform mat4 u_view_projection;
+uniform mat4 u_transform;
 
 void main()
 {
 	v_pos = a_pos;
 	v_color = a_color;
-	gl_Position = u_view_projection * vec4(a_pos, 1.0);
+	gl_Position = u_view_projection * u_transform * vec4(a_pos, 1.0);
 }
 
 #shader fragment

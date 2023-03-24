@@ -17,7 +17,7 @@ public:
 
     static void EndScene();
 
-    static void Submit(const Shader *shader, const VertexArray *vertex_array);
+    static void Submit(const Shader *shader, const VertexArray *vertex_array, const glm::mat4& transform = glm::mat4(1.0f));
 
     static RendererApi::Api GetRendererApi();
 

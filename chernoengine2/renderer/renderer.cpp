@@ -20,9 +20,10 @@ void Renderer::EndScene() {
 
 }
 
-void Renderer::Submit(const Shader *shader, const VertexArray *vertex_array) {
+void Renderer::Submit(const Shader *shader, const VertexArray *vertex_array, const glm::mat4& transform) {
     shader->Bind();
     shader->SetMat4("u_view_projection", scene_data_->view_projection_matrix);
+    shader->SetMat4("u_transform", transform);
 
     vertex_array->Bind();
     RenderCommand::DrawIndexed(vertex_array);
