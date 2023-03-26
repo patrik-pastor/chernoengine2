@@ -9,6 +9,8 @@
 
 #include <glm/glm.hpp>
 
+#include <chernoengine2/core/core.hpp>
+
 namespace chernoengine2 {
 
 class Shader {
@@ -17,7 +19,7 @@ public:
 
     virtual void Bind() const = 0;
 
-    static Shader *Create(const std::string& filepath);
+    static Ref<Shader> Create(const std::string& filepath);
 
     virtual void SetVec3(const std::string& name, const glm::vec3& vec) const = 0;
 

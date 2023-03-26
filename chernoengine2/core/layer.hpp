@@ -44,15 +44,11 @@ public:
     void OnImguiRender() override;
 
 private:
-    Shader *triangle_shader_;
-    VertexArray *triangle_va_;
-    VertexBuffer *triangle_vb_;
-    IndexBuffer *triangle_ib_;
+    Ref<Shader> triangle_shader_;
+    Ref<VertexArray> triangle_va_;
 
-    Shader *square_shader_;
-    VertexArray *square_va_;
-    VertexBuffer *square_vb_;
-    IndexBuffer *square_ib_;
+    Ref<Shader> square_shader_;
+    Ref<VertexArray> square_va_;
     glm::vec3 square_color_;
 
     OrthographicCamera camera_;

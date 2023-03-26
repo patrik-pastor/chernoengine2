@@ -5,6 +5,7 @@
 #ifndef CHERNOENGINE2_RENDER_COMMAND_HPP
 #define CHERNOENGINE2_RENDER_COMMAND_HPP
 
+#include <chernoengine2/core/core.hpp>
 #include <chernoengine2/renderer/renderer_api.hpp>
 
 #include <glm/glm.hpp>
@@ -13,14 +14,14 @@ namespace chernoengine2 {
 
 class RenderCommand {
 public:
-    static void DrawIndexed(const VertexArray *vertex_array);
+    static void DrawIndexed(const Ref<VertexArray>& vertex_array);
 
     static void SetClearColor(const glm::vec4& color);
 
     static void Clear();
 
 private:
-    static RendererApi *renderer_api_;
+    static Scope<RendererApi> renderer_api_;
 };
 
 } // chernoengine2

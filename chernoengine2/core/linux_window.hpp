@@ -34,7 +34,7 @@ public:
     void SetEventCallback(const EventCallbackFn& callback) override;
 private:
     GLFWwindow *window_;
-    GraphicsContext *context_;
+    Scope<GraphicsContext> context_;
     struct WindowData {
         std::string title;
         int width;

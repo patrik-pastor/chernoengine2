@@ -5,13 +5,15 @@
 #ifndef CHERNOENGINE2_GRAPHICS_CONTEXT_HPP
 #define CHERNOENGINE2_GRAPHICS_CONTEXT_HPP
 
+#include <chernoengine2/core/core.hpp>
+
 namespace chernoengine2 {
 
 class GraphicsContext {
 public:
     virtual ~GraphicsContext() = default;
 
-    static GraphicsContext *Create(void *window);
+    static Scope<GraphicsContext> Create(void *window);
 
     virtual void Init() = 0;
 

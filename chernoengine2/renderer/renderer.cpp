@@ -6,7 +6,7 @@
 
 namespace chernoengine2 {
 
-Renderer::SceneData *Renderer::scene_data_ = new Renderer::SceneData;
+Scope<Renderer::SceneData> Renderer::scene_data_ = CreateScope<Renderer::SceneData>();
 
 RendererApi::Api Renderer::GetRendererApi() {
     return RendererApi::GetApi();
@@ -20,7 +20,7 @@ void Renderer::EndScene() {
 
 }
 
-void Renderer::Submit(const Shader *shader, const VertexArray *vertex_array, const glm::mat4& transform) {
+void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertex_array, const glm::mat4& transform) {
     shader->Bind();
     shader->SetMat4("u_view_projection", scene_data_->view_projection_matrix);
     shader->SetMat4("u_transform", transform);

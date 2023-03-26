@@ -42,7 +42,7 @@ private:
 
     bool OnWindowClose(WindowCloseEvent& e);
 
-    Window *window_;
+    Scope<Window> window_;
     bool running_ = true;
     LayerStack layer_stack_;
     ImguiLayer *imgui_layer_;

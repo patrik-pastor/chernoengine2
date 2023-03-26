@@ -10,8 +10,8 @@ namespace chernoengine2 {
 WindowProps::WindowProps(const std::string& title, int width, int height) : title(title), width(width),
                                                                             height(height) {}
 
-Window *Window::Create(const WindowProps& props) {
-    return new LinuxWindow(props);
+Scope<Window> Window::Create(const WindowProps& props) {
+    return CreateScope<LinuxWindow>(props);
 }
 
 } // chernoengine2

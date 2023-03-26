@@ -10,13 +10,13 @@
 
 namespace chernoengine2 {
 
-VertexArray *VertexArray::Create() {
+Ref<VertexArray> VertexArray::Create() {
     switch(Renderer::GetRendererApi()){
         case RendererApi::Api::NONE:
             LOG_CORE_ERROR("RendererApi::NONE is currently not supported");
             return nullptr;
         case RendererApi::Api::OPENGL:
-            return new OpenglVertexArray;
+            return CreateRef<OpenglVertexArray>();
     }
     LOG_CORE_ERROR("Unknown RendererApi");
     return nullptr;

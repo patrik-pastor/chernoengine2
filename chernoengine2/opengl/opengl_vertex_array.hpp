@@ -20,18 +20,18 @@ public:
 
     void Unbind() const override;
 
-    void AddVertexBuffer(const VertexBuffer *buffer) override;
+    void AddVertexBuffer(const Ref<VertexBuffer>& buffer) override;
 
-    void SetIndexBuffer(const IndexBuffer *buffer) override;
+    void SetIndexBuffer(const Ref<IndexBuffer>& buffer) override;
 
-    const std::vector<const VertexBuffer*> & GetVertexBuffers() const override;
+    const std::vector<Ref<VertexBuffer>> & GetVertexBuffers() const override;
 
-    const IndexBuffer *GetIndexBuffer() const override;
+    const Ref<IndexBuffer>& GetIndexBuffer() const override;
 
 private:
     uint32_t renderer_id_;
-    std::vector<const VertexBuffer*> vertex_buffers_;
-    const IndexBuffer *index_buffer_;
+    std::vector<Ref<VertexBuffer>> vertex_buffers_;
+    Ref<IndexBuffer> index_buffer_;
 };
 
 } // chernoengine2

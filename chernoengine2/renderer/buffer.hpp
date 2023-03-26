@@ -12,6 +12,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <chernoengine2/core/core.hpp>
+
 namespace chernoengine2 {
 
 enum class ShaderDataType {
@@ -70,7 +72,7 @@ public:
 
     virtual const BufferLayout& GetLayout() const = 0;
 
-    static VertexBuffer *Create(float *vertices, int size);
+    static Ref<VertexBuffer> Create(float *vertices, int size);
 };
 
 class IndexBuffer {
@@ -83,7 +85,7 @@ public:
 
     virtual int GetCount() const = 0;
 
-    static IndexBuffer *Create(int *indices, int count);
+    static Ref<IndexBuffer> Create(int *indices, int count);
 };
 
 } // chernoengine2

@@ -28,16 +28,16 @@ FirstExample::FirstExample() :
             0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,
             0.0f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
     };
-    triangle_vb_ = VertexBuffer::Create(triangle_vertices, sizeof(triangle_vertices));
+    Ref<VertexBuffer> triangle_vb = VertexBuffer::Create(triangle_vertices, sizeof(triangle_vertices));
     BufferLayout layout = {
             {"a_pos",   ShaderDataType::Float3},
             {"a_color", ShaderDataType::Float4}
     };
-    triangle_vb_->SetLayout(layout);
-    triangle_va_->AddVertexBuffer(triangle_vb_);
+    triangle_vb->SetLayout(layout);
+    triangle_va_->AddVertexBuffer(triangle_vb);
     int triangle_indices[] = {0, 1, 2};
-    triangle_ib_ = IndexBuffer::Create(triangle_indices, 3);
-    triangle_va_->SetIndexBuffer(triangle_ib_);
+    Ref<IndexBuffer> triangle_ib = IndexBuffer::Create(triangle_indices, 3);
+    triangle_va_->SetIndexBuffer(triangle_ib);
     triangle_shader_ = Shader::Create("GLSL/triangle.shader");
 
     //SQUARE
@@ -48,14 +48,14 @@ FirstExample::FirstExample() :
             0.5f, 0.5f, 0.0f,
             -0.5f, 0.5f, 0.0f
     };
-    square_vb_ = VertexBuffer::Create(square_vertices, sizeof(square_vertices));
-    square_vb_->SetLayout({
+    Ref<VertexBuffer> square_vb = VertexBuffer::Create(square_vertices, sizeof(square_vertices));
+    square_vb->SetLayout({
                                   {"a_pos", ShaderDataType::Float3}
                           });
-    square_va_->AddVertexBuffer(square_vb_);
+    square_va_->AddVertexBuffer(square_vb);
     int square_indices[] = {0, 1, 2, 2, 3, 0};
-    square_ib_ = IndexBuffer::Create(square_indices, 6);
-    square_va_->SetIndexBuffer(square_ib_);
+    Ref<IndexBuffer> square_ib = IndexBuffer::Create(square_indices, 6);
+    square_va_->SetIndexBuffer(square_ib);
     square_shader_ = Shader::Create("GLSL/square.shader");
 }
 

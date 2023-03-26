@@ -22,7 +22,7 @@ void OpenglVertexArray::Unbind() const {
     glBindVertexArray(0);
 }
 
-void OpenglVertexArray::AddVertexBuffer(const VertexBuffer *buffer) {
+void OpenglVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& buffer) {
     glBindVertexArray(renderer_id_);
     buffer->Bind();
 
@@ -44,17 +44,17 @@ void OpenglVertexArray::AddVertexBuffer(const VertexBuffer *buffer) {
     vertex_buffers_.push_back(buffer);
 }
 
-void OpenglVertexArray::SetIndexBuffer(const IndexBuffer *buffer) {
+void OpenglVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& buffer) {
     glBindVertexArray(renderer_id_);
     buffer->Bind();
     index_buffer_ = buffer;
 }
 
-const std::vector<const VertexBuffer*>& OpenglVertexArray::GetVertexBuffers() const {
+const std::vector<Ref<VertexBuffer>>& OpenglVertexArray::GetVertexBuffers() const {
     return vertex_buffers_;
 }
 
-const IndexBuffer *OpenglVertexArray::GetIndexBuffer() const {
+const Ref<IndexBuffer>& OpenglVertexArray::GetIndexBuffer() const {
     return index_buffer_;
 }
 

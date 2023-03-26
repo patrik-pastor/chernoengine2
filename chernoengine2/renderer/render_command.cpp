@@ -7,9 +7,9 @@
 
 namespace chernoengine2 {
 
-RendererApi *RenderCommand::renderer_api_ = new OpenglRendererApi;
+Scope<RendererApi> RenderCommand::renderer_api_ = RendererApi::Create();
 
-void RenderCommand::DrawIndexed(const VertexArray *vertex_array) {
+void RenderCommand::DrawIndexed(const Ref<VertexArray>& vertex_array) {
     renderer_api_->DrawIndexed(vertex_array);
 }
 

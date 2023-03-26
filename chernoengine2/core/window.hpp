@@ -8,6 +8,7 @@
 #include <string>
 #include <functional>
 
+#include <chernoengine2/core/core.hpp>
 #include <chernoengine2/events/event.hpp>
 
 namespace chernoengine2 {
@@ -24,7 +25,7 @@ class Window {
 public:
     using EventCallbackFn = std::function<void(Event&)>;
 
-    static Window *Create(const WindowProps& props = WindowProps());
+    static Scope<Window> Create(const WindowProps& props = WindowProps());
 
     virtual ~Window() = default;
 

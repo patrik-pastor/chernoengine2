@@ -5,6 +5,7 @@
 #ifndef CHERNOENGINE2_RENDERER_HPP
 #define CHERNOENGINE2_RENDERER_HPP
 
+#include <chernoengine2/core/core.hpp>
 #include <chernoengine2/renderer/render_command.hpp>
 #include <chernoengine2/renderer/shader.hpp>
 #include <chernoengine2/renderer/orthographic_camera.hpp>
@@ -17,7 +18,7 @@ public:
 
     static void EndScene();
 
-    static void Submit(const Shader *shader, const VertexArray *vertex_array, const glm::mat4& transform = glm::mat4(1.0f));
+    static void Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertex_array, const glm::mat4& transform = glm::mat4(1.0f));
 
     static RendererApi::Api GetRendererApi();
 
@@ -25,7 +26,7 @@ private:
     struct SceneData {
         glm::mat4 view_projection_matrix;
     };
-    static SceneData *scene_data_;
+    static Scope<SceneData> scene_data_;
 };
 
 } // chernoengine2

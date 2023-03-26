@@ -10,12 +10,12 @@
 
 namespace chernoengine2 {
 
-Shader *Shader::Create(const std::string& filepath) {
+Ref<Shader> Shader::Create(const std::string& filepath) {
     switch(Renderer::GetRendererApi()){
         case RendererApi::Api::NONE:
             LOG_CORE_ERROR("RendererApi::NONE is currently not supported");
         case RendererApi::Api::OPENGL:
-            return new OpenglShader(filepath);
+            return CreateRef<OpenglShader>(filepath);
     }
     LOG_CORE_ERROR("Unknown RendererApi");
     return nullptr;
