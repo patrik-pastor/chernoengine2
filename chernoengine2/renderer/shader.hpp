@@ -13,26 +13,18 @@ namespace chernoengine2 {
 
 class Shader {
 public:
-    explicit Shader(const std::string& filepath);
+    virtual ~Shader() = default;
 
-    void Bind() const;
+    virtual void Bind() const = 0;
 
-    void SetBool(const std::string &name, bool value) const;
+    static Shader *Create(const std::string& filepath);
 
-    void SetInt(const std::string &name, int value) const;
+    virtual void SetVec3(const std::string& name, const glm::vec3& vec) const = 0;
 
-    void SetFloat(const std::string &name, float value) const;
+    virtual void SetVec4(const std::string& name, const glm::vec4& vec) const = 0;
 
-    void SetVec4(const std::string &name, const glm::vec4 &vec) const;
+    virtual void SetMat4(const std::string& name, const glm::mat4& mat) const = 0;
 
-    void SetMat4(const std::string &name, const glm::mat4 &mat) const;
-
-    uint32_t GetId() const;
-
-private:
-    void CheckCompileErrors(uint32_t shader_id, const std::string &type);
-
-    uint32_t id_;
 };
 
 } // chernoengine2

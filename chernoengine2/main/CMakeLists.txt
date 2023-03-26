@@ -26,10 +26,10 @@ add_executable(main
 
         ../renderer/graphics_context.cpp
         ../renderer/opengl_context.cpp
-        ../renderer/shader.cpp
         ../renderer/renderer.cpp
         ../renderer/renderer_api.cpp
         ../renderer/render_command.cpp
+        ../renderer/shader.cpp
         ../renderer/buffer.cpp
         ../renderer/vertex_array.cpp
         ../renderer/orthographic_camera.cpp
@@ -37,6 +37,7 @@ add_executable(main
         ../opengl/opengl_buffer.cpp
         ../opengl/opengl_vertex_array.cpp
         ../opengl/opengl_renderer_api.cpp
+        ../opengl/opengl_shader.cpp
 
         ../imgui/imgui_layer.cpp
 

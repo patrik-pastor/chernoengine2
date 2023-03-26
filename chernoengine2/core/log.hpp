@@ -5,7 +5,6 @@
 #ifndef CHERNOENGINE2_LOG_HPP
 #define CHERNOENGINE2_LOG_HPP
 
-#include <memory>
 #include <spdlog/spdlog.h>
 
 namespace chernoengine2 {

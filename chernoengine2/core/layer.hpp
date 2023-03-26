@@ -5,7 +5,6 @@
 #ifndef CHERNOENGINE2_LAYER_HPP
 #define CHERNOENGINE2_LAYER_HPP
 
-#include <memory>
 #include <string>
 
 #include <glm/glm.hpp>
@@ -42,6 +41,8 @@ public:
 
     void OnUpdate(float delta_time) override;
 
+    void OnImguiRender() override;
+
 private:
     Shader *triangle_shader_;
     VertexArray *triangle_va_;
@@ -52,6 +53,7 @@ private:
     VertexArray *square_va_;
     VertexBuffer *square_vb_;
     IndexBuffer *square_ib_;
+    glm::vec3 square_color_;
 
     OrthographicCamera camera_;
 

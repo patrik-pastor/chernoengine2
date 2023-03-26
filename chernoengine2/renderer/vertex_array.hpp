@@ -5,8 +5,6 @@
 #ifndef CHERNOENGINE2_VERTEX_ARRAY_HPP
 #define CHERNOENGINE2_VERTEX_ARRAY_HPP
 
-#include <memory>
-
 #include <chernoengine2/renderer/buffer.hpp>
 
 namespace chernoengine2 {

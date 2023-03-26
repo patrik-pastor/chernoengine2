@@ -5,9 +5,10 @@
 #include <chernoengine2/core/layer.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <imgui/imgui.h>
 
 #include <chernoengine2/core/key_codes.hpp>
-#include <chernoengine2/core/log.hpp>
 #include <chernoengine2/core/input.hpp>
 
 namespace chernoengine2 {
@@ -17,7 +18,8 @@ Layer::Layer(const std::string& name) : name_(name) {}
 FirstExample::FirstExample() :
         Layer("FirstExample"),
         camera_(-2.0f, 2.0f, -2.0f, 2.0f),
-        camera_position_(0.0f) {
+        camera_position_(0.0f),
+        square_color_(0.2f, 0.3f, 0.8f){
 
     // TRIANGLE
     triangle_va_ = VertexArray::Create();
@@ -36,7 +38,7 @@ FirstExample::FirstExample() :
     int triangle_indices[] = {0, 1, 2};
     triangle_ib_ = IndexBuffer::Create(triangle_indices, 3);
     triangle_va_->SetIndexBuffer(triangle_ib_);
-    triangle_shader_ = new Shader("GLSL/triangle.shader");
+    triangle_shader_ = Shader::Create("GLSL/triangle.shader");
 
     //SQUARE
     square_va_ = VertexArray::Create();
@@ -54,8 +56,7 @@ FirstExample::FirstExample() :
     int square_indices[] = {0, 1, 2, 2, 3, 0};
     square_ib_ = IndexBuffer::Create(square_indices, 6);
     square_va_->SetIndexBuffer(square_ib_);
-    square_shader_ = new Shader("GLSL/square.shader");
-
+    square_shader_ = Shader::Create("GLSL/square.shader");
 }
 
 void FirstExample::OnUpdate(float delta_time) {
@@ -88,6 +89,9 @@ void FirstExample::OnUpdate(float delta_time) {
 
     Renderer::BeginScene(camera_);
 
+    square_shader_->Bind();
+    square_shader_->SetVec3("u_color", square_color_);
+
     glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
     for (int y = 0; y < 20; y++) {
         for (int x = 0; x < 20; x++) {
@@ -99,6 +103,14 @@ void FirstExample::OnUpdate(float delta_time) {
     Renderer::Submit(triangle_shader_, triangle_va_);
 
     Renderer::EndScene();
+}
+
+void FirstExample::OnImguiRender() {
+    ImGui::Begin("Settings");
+
+    ImGui::ColorEdit3("Square Color", glm::value_ptr(square_color_));
+
+    ImGui::End();
 }
 
 } // chernoengine22
