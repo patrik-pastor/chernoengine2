@@ -10,8 +10,9 @@
 #include <glm/glm.hpp>
 
 #include <chernoengine2/events/event.hpp>
-#include <chernoengine2/renderer/renderer.hpp>
 #include <chernoengine2/events/key_event.hpp>
+#include <chernoengine2/renderer/renderer.hpp>
+#include <chernoengine2/renderer/texture.hpp>
 
 namespace chernoengine2 {
 
@@ -50,6 +51,9 @@ private:
     Ref<Shader> square_shader_;
     Ref<VertexArray> square_va_;
     glm::vec3 square_color_;
+
+    Ref<Shader> texture_shader_;
+    Ref<Texture2D> texture_;
 
     OrthographicCamera camera_;
 

@@ -17,6 +17,8 @@ public:
 
     void Bind() const override;
 
+    void SetInt(const std::string &name, int value) const override;
+
     void SetVec3(const std::string &name, const glm::vec3 &vec) const override;
 
     void SetVec4(const std::string& name, const glm::vec4& vec) const override;

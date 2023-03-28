@@ -19,7 +19,7 @@ FirstExample::FirstExample() :
         Layer("FirstExample"),
         camera_(-2.0f, 2.0f, -2.0f, 2.0f),
         camera_position_(0.0f),
-        square_color_(0.2f, 0.3f, 0.8f){
+        square_color_(0.2f, 0.3f, 0.8f) {
 
     // TRIANGLE
     triangle_va_ = VertexArray::Create();
@@ -40,23 +40,30 @@ FirstExample::FirstExample() :
     triangle_va_->SetIndexBuffer(triangle_ib);
     triangle_shader_ = Shader::Create("GLSL/triangle.shader");
 
-    //SQUARE
+    // SQUARE
     square_va_ = VertexArray::Create();
     float square_vertices[] = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.5f, 0.5f, 0.0f,
-            -0.5f, 0.5f, 0.0f
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f
     };
     Ref<VertexBuffer> square_vb = VertexBuffer::Create(square_vertices, sizeof(square_vertices));
     square_vb->SetLayout({
-                                  {"a_pos", ShaderDataType::Float3}
-                          });
+                                 {"a_pos", ShaderDataType::Float3},
+                                 {"a_texcoord", ShaderDataType::Float2}
+                         });
     square_va_->AddVertexBuffer(square_vb);
     int square_indices[] = {0, 1, 2, 2, 3, 0};
     Ref<IndexBuffer> square_ib = IndexBuffer::Create(square_indices, 6);
     square_va_->SetIndexBuffer(square_ib);
     square_shader_ = Shader::Create("GLSL/square.shader");
+
+    // TEXTURE
+    texture_shader_ = Shader::Create("GLSL/texture.shader");
+    texture_shader_->Bind();
+    texture_shader_->SetInt("u_texture", 0);
+    texture_ = Texture2D::Create("textures/checkerboard.png");
 }
 
 void FirstExample::OnUpdate(float delta_time) {
@@ -100,7 +107,11 @@ void FirstExample::OnUpdate(float delta_time) {
             Renderer::Submit(square_shader_, square_va_, transform);
         }
     }
-    Renderer::Submit(triangle_shader_, triangle_va_);
+
+    texture_->Bind();
+    Renderer::Submit(texture_shader_, square_va_, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+//    Renderer::Submit(triangle_shader_, triangle_va_);
 
     Renderer::EndScene();
 }
