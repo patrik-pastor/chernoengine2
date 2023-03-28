@@ -17,8 +17,7 @@ Layer::Layer(const std::string& name) : name_(name) {}
 
 FirstExample::FirstExample() :
         Layer("FirstExample"),
-        camera_(-2.0f, 2.0f, -2.0f, 2.0f),
-        camera_position_(0.0f),
+        camera_controller_(1280.0f / 720.0f, true),
         square_color_(0.2f, 0.3f, 0.8f) {
 
     // TRIANGLE
@@ -38,7 +37,7 @@ FirstExample::FirstExample() :
     int triangle_indices[] = {0, 1, 2};
     Ref<IndexBuffer> triangle_ib = IndexBuffer::Create(triangle_indices, 3);
     triangle_va_->SetIndexBuffer(triangle_ib);
-    triangle_shader_ = Shader::Create("GLSL/triangle.shader");
+    triangle_shader_ = Shader::Create("GLSL/triangle.glsl");
 
     // SQUARE
     square_va_ = VertexArray::Create();
@@ -57,10 +56,10 @@ FirstExample::FirstExample() :
     int square_indices[] = {0, 1, 2, 2, 3, 0};
     Ref<IndexBuffer> square_ib = IndexBuffer::Create(square_indices, 6);
     square_va_->SetIndexBuffer(square_ib);
-    square_shader_ = Shader::Create("GLSL/square.shader");
+    square_shader_ = Shader::Create("GLSL/square.glsl");
 
     // TEXTURES
-    chessboard_shader_ = Shader::Create("GLSL/texture.shader");
+    chessboard_shader_ = Shader::Create("GLSL/texture.glsl");
     chessboard_shader_->Bind();
     chessboard_shader_->SetInt("u_texture", 0);
     chessboard_texture_ = Texture2D::Create("textures/checkerboard.png");
@@ -70,33 +69,14 @@ FirstExample::FirstExample() :
 
 void FirstExample::OnUpdate(float delta_time) {
 
-    // CAMERA TRANSLATION
-    if (Input::IsKeyPressed(KEY_LEFT)) {
-        camera_position_.x -= camera_move_speed_ * delta_time;
-    } else if (Input::IsKeyPressed(KEY_RIGHT)) {
-        camera_position_.x += camera_move_speed_ * delta_time;
-    }
-    if (Input::IsKeyPressed(KEY_UP)) {
-        camera_position_.y += camera_move_speed_ * delta_time;
-    } else if (Input::IsKeyPressed(KEY_DOWN)) {
-        camera_position_.y -= camera_move_speed_ * delta_time;
-    }
+    // update
+    camera_controller_.OnUpdate(delta_time);
 
-    // CAMERA ROTATION
-    if (Input::IsKeyPressed(KEY_A)) {
-        camera_rotation_ += camera_rotation_speed_ * delta_time;
-    }
-    if (Input::IsKeyPressed(KEY_D)) {
-        camera_rotation_ -= camera_rotation_speed_ * delta_time;
-    }
-
+    // render
     RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
     RenderCommand::Clear();
 
-    camera_.SetPosition(camera_position_);
-    camera_.SetRotation(camera_rotation_);
-
-    Renderer::BeginScene(camera_);
+    Renderer::BeginScene(camera_controller_.GetCamera());
 
     square_shader_->Bind();
     square_shader_->SetVec3("u_color", square_color_);
@@ -126,6 +106,10 @@ void FirstExample::OnImguiRender() {
     ImGui::ColorEdit3("Square Color", glm::value_ptr(square_color_));
 
     ImGui::End();
+}
+
+void FirstExample::OnEvent(Event& event) {
+    camera_controller_.OnEvent(event);
 }
 
 } // chernoengine22

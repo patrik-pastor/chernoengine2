@@ -12,6 +12,7 @@
 #include <chernoengine2/events/event.hpp>
 #include <chernoengine2/events/key_event.hpp>
 #include <chernoengine2/renderer/renderer.hpp>
+#include <chernoengine2/renderer/orthographic_camera_controller.hpp>
 #include <chernoengine2/renderer/texture.hpp>
 
 namespace chernoengine2 {
@@ -44,6 +45,8 @@ public:
 
     void OnImguiRender() override;
 
+    void OnEvent(Event &event) override;
+
 private:
     Ref<Shader> triangle_shader_;
     Ref<VertexArray> triangle_va_;
@@ -56,12 +59,7 @@ private:
     Ref<Texture2D> chessboard_texture_;
     Ref<Texture2D> chernologo_texture_;
 
-    OrthographicCamera camera_;
-
-    glm::vec3 camera_position_;
-    float camera_move_speed_ = 5.0f;
-    float camera_rotation_ = 0.0f;
-    float camera_rotation_speed_ = 180.0f;
+    OrthographicCameraController camera_controller_;
 };
 
 } // chernoengine22

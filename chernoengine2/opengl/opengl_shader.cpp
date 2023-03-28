@@ -41,7 +41,7 @@ OpenglShader::OpenglShader(const std::string& filepath) {
     std::stringstream ss[2];
     ShaderType type = ShaderType::NONE;
     while (getline(stream, line)) {
-        if (line.find("#shader") != std::string::npos) {
+        if (line.find("#type") != std::string::npos) {
             if (line.find("vertex") != std::string::npos) {
                 type = ShaderType::VERTEX;
             } else if (line.find("fragment") != std::string::npos) {
