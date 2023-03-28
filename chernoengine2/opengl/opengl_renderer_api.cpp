@@ -8,6 +8,11 @@
 
 namespace chernoengine2 {
 
+void OpenglRendererApi::Init() const {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
 void OpenglRendererApi::SetClearColor(const glm::vec4& color) {
     glClearColor(color.r, color.g, color.b, color.a);
 }
@@ -19,5 +24,6 @@ void OpenglRendererApi::Clear() {
 void OpenglRendererApi::DrawIndexed(const Ref<VertexArray>& vertex_array) {
     glDrawElements(GL_TRIANGLES, vertex_array->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 }
+
 
 } // chernoengine2

@@ -52,5 +52,4 @@ void OpenglTexture2D::Bind(int slot) const {
 }
 
 
-
 } // chernoengine2

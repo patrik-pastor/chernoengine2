@@ -6,6 +6,10 @@
 
 namespace chernoengine2 {
 
+void Renderer::Init() {
+    RenderCommand::Init();
+}
+
 Scope<Renderer::SceneData> Renderer::scene_data_ = CreateScope<Renderer::SceneData>();
 
 RendererApi::Api Renderer::GetRendererApi() {

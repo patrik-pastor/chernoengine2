@@ -59,11 +59,13 @@ FirstExample::FirstExample() :
     square_va_->SetIndexBuffer(square_ib);
     square_shader_ = Shader::Create("GLSL/square.shader");
 
-    // TEXTURE
-    texture_shader_ = Shader::Create("GLSL/texture.shader");
-    texture_shader_->Bind();
-    texture_shader_->SetInt("u_texture", 0);
-    texture_ = Texture2D::Create("textures/checkerboard.png");
+    // TEXTURES
+    chessboard_shader_ = Shader::Create("GLSL/texture.shader");
+    chessboard_shader_->Bind();
+    chessboard_shader_->SetInt("u_texture", 0);
+    chessboard_texture_ = Texture2D::Create("textures/checkerboard.png");
+
+    chernologo_texture_ = Texture2D::Create("textures/chernologo.png");
 }
 
 void FirstExample::OnUpdate(float delta_time) {
@@ -108,8 +110,10 @@ void FirstExample::OnUpdate(float delta_time) {
         }
     }
 
-    texture_->Bind();
-    Renderer::Submit(texture_shader_, square_va_, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+    chessboard_texture_->Bind();
+    Renderer::Submit(chessboard_shader_, square_va_, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+    chernologo_texture_->Bind();
+    Renderer::Submit(chessboard_shader_, square_va_, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 //    Renderer::Submit(triangle_shader_, triangle_va_);
 

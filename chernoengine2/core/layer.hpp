@@ -52,8 +52,9 @@ private:
     Ref<VertexArray> square_va_;
     glm::vec3 square_color_;
 
-    Ref<Shader> texture_shader_;
-    Ref<Texture2D> texture_;
+    Ref<Shader> chessboard_shader_;
+    Ref<Texture2D> chessboard_texture_;
+    Ref<Texture2D> chernologo_texture_;
 
     OrthographicCamera camera_;
 

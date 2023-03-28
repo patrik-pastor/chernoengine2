@@ -14,6 +14,8 @@ namespace chernoengine2 {
 
 class Renderer {
 public:
+    static void Init();
+
     static void BeginScene(const OrthographicCamera& camera);
 
     static void EndScene();

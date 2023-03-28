@@ -7,6 +7,10 @@
 
 namespace chernoengine2 {
 
+void RenderCommand::Init() {
+    renderer_api_->Init();
+}
+
 Scope<RendererApi> RenderCommand::renderer_api_ = RendererApi::Create();
 
 void RenderCommand::DrawIndexed(const Ref<VertexArray>& vertex_array) {
@@ -20,5 +24,6 @@ void RenderCommand::SetClearColor(const glm::vec4& color) {
 void RenderCommand::Clear() {
     renderer_api_->Clear();
 }
+
 
 } // chernoengine2

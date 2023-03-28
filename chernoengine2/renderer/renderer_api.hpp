@@ -18,6 +18,8 @@ public:
         NONE = 0, OPENGL = 1
     };
 
+    virtual void Init() const = 0;
+
     virtual ~RendererApi() = default;
 
     virtual void SetClearColor(const glm::vec4& color) = 0;

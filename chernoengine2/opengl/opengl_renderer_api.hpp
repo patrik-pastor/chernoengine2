@@ -11,6 +11,8 @@ namespace chernoengine2 {
 
 class OpenglRendererApi : public RendererApi {
 public:
+    void Init() const override;
+
     void SetClearColor(const glm::vec4& color) override;
 
     void Clear() override;
