@@ -44,5 +44,8 @@ add_executable(main
 
         ../imgui/imgui_layer.cpp
 
+        example_layers/first_example.cpp
+        example_layers/second_example.cpp
+
         main.cpp)
 target_link_libraries(main PRIVATE spdlog::spdlog glfw)
