@@ -19,12 +19,16 @@ public:
 
     virtual int GetHeight() const = 0;
 
+    virtual void SetData(void *data) = 0;
+
     virtual void Bind(int slot = 0) const = 0;
 };
 
 class Texture2D : public Texture {
 public:
     static Ref<Texture2D> Create(const std::string& filepath);
+
+    static Ref<Texture2D> Create(int width, int height);
 };
 
 } // chernoengine2

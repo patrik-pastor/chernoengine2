@@ -32,7 +32,7 @@ FirstExample::FirstExample() :
 //    int triangle_indices[] = {0, 1, 2};
 //    Ref<IndexBuffer> triangle_ib = IndexBuffer::Create(triangle_indices, 3);
 //    triangle_va_->SetIndexBuffer(triangle_ib);
-//    triangle_shader_ = Shader::Create("GLSL/triangle.glsl");
+//    triangle_shader_ = Shader::Create("GLSL/1e_triangle.glsl");
 
     // SQUARE
     square_va_ = VertexArray::Create();
@@ -54,7 +54,7 @@ FirstExample::FirstExample() :
     square_shader_ = Shader::Create("GLSL/1e_square.glsl");
 
     // TEXTURES
-    chessboard_shader_ = Shader::Create("GLSL/texture.glsl");
+    chessboard_shader_ = Shader::Create("GLSL/1e_texture.glsl");
     chessboard_shader_->Bind();
     chessboard_shader_->SetInt("u_texture", 0);
     chessboard_texture_ = Texture2D::Create("textures/checkerboard.png");

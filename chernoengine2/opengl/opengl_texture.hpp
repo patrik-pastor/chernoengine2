@@ -13,9 +13,13 @@ namespace chernoengine2 {
 
 class OpenglTexture2D : public Texture2D {
 public:
+    OpenglTexture2D(int width, int height);
+
     OpenglTexture2D(const std::string& filepath);
 
     ~OpenglTexture2D() override;
+
+    void SetData(void *data) override;
 
     int GetWidth() const override;
 

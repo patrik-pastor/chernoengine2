@@ -11,6 +11,8 @@ namespace chernoengine2 {
 void OpenglRendererApi::Init() const {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glEnable(GL_DEPTH_TEST);
 }
 
 void OpenglRendererApi::SetClearColor(const glm::vec4& color) {

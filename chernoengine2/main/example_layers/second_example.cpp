@@ -8,7 +8,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui/imgui.h>
 
-#include <chernoengine2/renderer/renderer_2_d.hpp>
+#include <chernoengine2/renderer/renderer_2d.hpp>
 
 namespace chernoengine2 {
 
@@ -16,7 +16,7 @@ SecondExample::SecondExample() :
         camera_controller_(1280.0f / 720.0f) {}
 
 void SecondExample::OnAttach() {
-
+    chessboard_texture_ = Texture2D::Create("textures/checkerboard.png");
 }
 
 void SecondExample::OnDetach() {
@@ -34,7 +34,9 @@ void SecondExample::OnUpdate(float delta_time) {
     Renderer2D::BeginScene(camera_controller_.GetCamera());
 
     Renderer2D::BeginScene(camera_controller_.GetCamera());
-    Renderer2D::DrawQuad({0.0f, 0.0f}, {1.0f, 1.0f}, {0.8f, 0.2f, 0.3f, 1.0f});
+    Renderer2D::DrawQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, {0.8f, 0.2f, 0.3f, 1.0f});
+    Renderer2D::DrawQuad({0.5f, -0.5f}, {0.5f, 0.75f}, {0.2f, 0.3f, 0.8f, 1.0f});
+    Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {10.0f, 10.0f}, chessboard_texture_);
     Renderer2D::EndScene();
 }
 

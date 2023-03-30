@@ -14,6 +14,14 @@
 
 namespace chernoengine2 {
 
+OpenglTexture2D::OpenglTexture2D(int width, int height): width_(width), height_(height) {
+    glGenTextures(1, &renderer_id_);
+    glBindTexture(GL_TEXTURE_2D, renderer_id_);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+}
+
 OpenglTexture2D::OpenglTexture2D(const std::string& filepath) {
     int width, height, channels;
     stbi_set_flip_vertically_on_load(1);
@@ -34,8 +42,13 @@ OpenglTexture2D::OpenglTexture2D(const std::string& filepath) {
     stbi_image_free(data);
 }
 
+
 OpenglTexture2D::~OpenglTexture2D() {
     glDeleteTextures(1, &renderer_id_);
+}
+
+void OpenglTexture2D::SetData(void *data) {
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 }
 
 int OpenglTexture2D::GetWidth() const {

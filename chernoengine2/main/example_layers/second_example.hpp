@@ -32,6 +32,8 @@ private:
     Ref<Shader> square_shader_;
     Ref<VertexArray> square_va_;
     glm::vec4 square_color_ = {0.2f, 0.3f, 0.8f, 1.0};
+
+    Ref<Texture2D> chessboard_texture_;
 };
 
 } // chernoengine2

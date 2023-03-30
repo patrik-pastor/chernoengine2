@@ -4,7 +4,7 @@
 
 #include <chernoengine2/renderer/renderer.hpp>
 
-#include <chernoengine2/renderer/renderer_2_d.hpp>
+#include <chernoengine2/renderer/renderer_2d.hpp>
 
 namespace chernoengine2 {
 
