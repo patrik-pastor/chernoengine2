@@ -27,6 +27,7 @@ add_executable(main
         ../renderer/graphics_context.cpp
         ../renderer/opengl_context.cpp
         ../renderer/renderer.cpp
+        ../renderer/renderer_2_d.cpp
         ../renderer/renderer_api.cpp
         ../renderer/render_command.cpp
         ../renderer/shader.cpp

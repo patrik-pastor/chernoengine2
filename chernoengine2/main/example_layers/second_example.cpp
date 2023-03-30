@@ -8,28 +8,15 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui/imgui.h>
 
+#include <chernoengine2/renderer/renderer_2_d.hpp>
+
 namespace chernoengine2 {
 
 SecondExample::SecondExample() :
         camera_controller_(1280.0f / 720.0f) {}
 
 void SecondExample::OnAttach() {
-    square_va_ = VertexArray::Create();
-    float square_vertices[] = {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.5f, 0.5f, 0.0f,
-            -0.5f, 0.5f, 0.0f
-    };
-    Ref<VertexBuffer> square_vb = VertexBuffer::Create(square_vertices, sizeof(square_vertices));
-    square_vb->SetLayout({
-                                 {"a_pos", ShaderDataType::Float3},
-                         });
-    square_va_->AddVertexBuffer(square_vb);
-    int square_indices[] = {0, 1, 2, 2, 3, 0};
-    Ref<IndexBuffer> square_ib = IndexBuffer::Create(square_indices, 6);
-    square_va_->SetIndexBuffer(square_ib);
-    square_shader_ = Shader::Create("GLSL/2e_square.glsl");
+
 }
 
 void SecondExample::OnDetach() {
@@ -44,14 +31,11 @@ void SecondExample::OnUpdate(float delta_time) {
     RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
     RenderCommand::Clear();
 
-    Renderer::BeginScene(camera_controller_.GetCamera());
+    Renderer2D::BeginScene(camera_controller_.GetCamera());
 
-    square_shader_->Bind();
-    square_shader_->SetVec3("u_color", square_color_);
-
-    Renderer::Submit(square_shader_, square_va_);
-
-    Renderer::EndScene();
+    Renderer2D::BeginScene(camera_controller_.GetCamera());
+    Renderer2D::DrawQuad({0.0f, 0.0f}, {1.0f, 1.0f}, {0.8f, 0.2f, 0.3f, 1.0f});
+    Renderer2D::EndScene();
 }
 
 void SecondExample::OnImguiRender() {

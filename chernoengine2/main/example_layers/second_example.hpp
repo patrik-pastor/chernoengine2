@@ -31,7 +31,7 @@ private:
 
     Ref<Shader> square_shader_;
     Ref<VertexArray> square_va_;
-    glm::vec3 square_color_ = {0.2f, 0.3f, 0.8f};
+    glm::vec4 square_color_ = {0.2f, 0.3f, 0.8f, 1.0};
 };
 
 } // chernoengine2

@@ -4,10 +4,13 @@
 
 #include <chernoengine2/renderer/renderer.hpp>
 
+#include <chernoengine2/renderer/renderer_2_d.hpp>
+
 namespace chernoengine2 {
 
 void Renderer::Init() {
     RenderCommand::Init();
+    Renderer2D::Init();
 }
 
 Scope<Renderer::SceneData> Renderer::scene_data_ = CreateScope<Renderer::SceneData>();
