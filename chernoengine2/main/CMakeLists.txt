@@ -45,6 +45,9 @@ add_executable(main
 
         ../imgui/imgui_layer.cpp
 
+        ../debug/instrumentation_timer.cpp
+        ../debug/instrumentor.cpp
+
         example_layers/first_example.cpp
         example_layers/second_example.cpp
 

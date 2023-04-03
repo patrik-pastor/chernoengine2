@@ -74,10 +74,10 @@ void ImguiLayer::End() {
     }
 }
 
-void ImguiLayer::OnImguiRender() {
-    static bool show = true;
-    ImGui::ShowDemoWindow(&show);
-}
+//void ImguiLayer::OnImguiRender() {
+//    static bool show = true;
+//    ImGui::ShowDemoWindow(&show);
+//}
 
 
 } // chernoengine2

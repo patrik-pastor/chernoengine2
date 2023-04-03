@@ -32,7 +32,7 @@ FirstExample::FirstExample() :
 //    int triangle_indices[] = {0, 1, 2};
 //    Ref<IndexBuffer> triangle_ib = IndexBuffer::Create(triangle_indices, 3);
 //    triangle_va_->SetIndexBuffer(triangle_ib);
-//    triangle_shader_ = Shader::Create("GLSL/1e_triangle.glsl");
+//    triangle_shader_ = Shader::Create("assets/GLSL/1e_triangle.glsl");
 
     // SQUARE
     square_va_ = VertexArray::Create();
@@ -51,15 +51,15 @@ FirstExample::FirstExample() :
     int square_indices[] = {0, 1, 2, 2, 3, 0};
     Ref<IndexBuffer> square_ib = IndexBuffer::Create(square_indices, 6);
     square_va_->SetIndexBuffer(square_ib);
-    square_shader_ = Shader::Create("GLSL/1e_square.glsl");
+    square_shader_ = Shader::Create("assets/GLSL/1e_square.glsl");
 
     // TEXTURES
-    chessboard_shader_ = Shader::Create("GLSL/1e_texture.glsl");
+    chessboard_shader_ = Shader::Create("assets/GLSL/1e_texture.glsl");
     chessboard_shader_->Bind();
     chessboard_shader_->SetInt("u_texture", 0);
-    chessboard_texture_ = Texture2D::Create("textures/checkerboard.png");
+    chessboard_texture_ = Texture2D::Create("assets/textures/checkerboard.png");
 
-    chernologo_texture_ = Texture2D::Create("textures/chernologo.png");
+    chernologo_texture_ = Texture2D::Create("assets/textures/chernologo.png");
 }
 
 void FirstExample::OnUpdate(float delta_time) {

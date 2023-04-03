@@ -5,6 +5,9 @@
 #ifndef CHERNOENGINE2_SECOND_EXAMPLE_HPP
 #define CHERNOENGINE2_SECOND_EXAMPLE_HPP
 
+#include <vector>
+#include <chrono>
+
 #include <glm/glm.hpp>
 
 #include <chernoengine2/core/layer.hpp>
@@ -28,11 +31,9 @@ public:
 
 private:
     OrthographicCameraController camera_controller_;
-
     Ref<Shader> square_shader_;
     Ref<VertexArray> square_va_;
     glm::vec4 square_color_ = {0.2f, 0.3f, 0.8f, 1.0};
-
     Ref<Texture2D> chessboard_texture_;
 };
 

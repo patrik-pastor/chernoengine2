@@ -21,7 +21,7 @@ public:
 
     void End();
 
-    void OnImguiRender() override;
+//    void OnImguiRender() override;
 };
 
 } // chernoengine2
