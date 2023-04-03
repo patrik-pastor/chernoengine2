@@ -11,12 +11,15 @@
 #include <chernoengine2/events/application_event.hpp>
 #include <chernoengine2/events/key_event.hpp>
 #include <chernoengine2/events/mouse_event.hpp>
+#include <chernoengine2/debug/instrumentor.hpp>
 
 namespace chernoengine2 {
 
 static int window_count = 0;
 
 LinuxWindow::LinuxWindow(const WindowProps& props){
+    PROFILE_FUNCTION();
+
     LOG_CORE_INFO("Creating window_ {0} ({1}, {2})", props.title, props.width, props.height);
     data_.title = props.title;
     data_.width = props.width;
@@ -116,8 +119,10 @@ LinuxWindow::LinuxWindow(const WindowProps& props){
 }
 
 void LinuxWindow::OnUpdate() {
-    context_->SwapBuffers();
+    PROFILE_FUNCTION();
+
     glfwPollEvents();
+    context_->SwapBuffers();
 }
 
 int LinuxWindow::GetWidth() const {
@@ -137,6 +142,8 @@ void LinuxWindow::SetEventCallback(const Window::EventCallbackFn& callback) {
 }
 
 void LinuxWindow::SetVSync(bool enabled) {
+    PROFILE_FUNCTION();
+
     if(enabled){
         glfwSwapInterval(1);
     } else {

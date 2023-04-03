@@ -11,10 +11,13 @@
 #include <stb/stb_image.h>
 
 #include <chernoengine2/core/log.hpp>
+#include <chernoengine2/debug/instrumentor.hpp>
 
 namespace chernoengine2 {
 
 OpenglTexture2D::OpenglTexture2D(int width, int height): width_(width), height_(height) {
+    PROFILE_FUNCTION();
+
     glGenTextures(1, &renderer_id_);
     glBindTexture(GL_TEXTURE_2D, renderer_id_);
 
@@ -23,9 +26,15 @@ OpenglTexture2D::OpenglTexture2D(int width, int height): width_(width), height_(
 }
 
 OpenglTexture2D::OpenglTexture2D(const std::string& filepath) {
+    PROFILE_FUNCTION();
+
     int width, height, channels;
     stbi_set_flip_vertically_on_load(1);
-    uint8_t *data = stbi_load(filepath.c_str(), &width, &height, &channels, 4);
+    uint8_t *data = nullptr;
+    {
+        PROFILE_SCOPE("stbi_load - OpenglTexture2D::OpenglTexture2D(const std::string&)");
+        data = stbi_load(filepath.c_str(), &width, &height, &channels, 4);
+    }
     if (data == nullptr) {
         LOG_CORE_ERROR("Failed to load image");
     }
@@ -44,10 +53,14 @@ OpenglTexture2D::OpenglTexture2D(const std::string& filepath) {
 
 
 OpenglTexture2D::~OpenglTexture2D() {
+    PROFILE_FUNCTION();
+
     glDeleteTextures(1, &renderer_id_);
 }
 
 void OpenglTexture2D::SetData(void *data) {
+    PROFILE_FUNCTION();
+
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 }
 
@@ -60,6 +73,8 @@ int OpenglTexture2D::GetHeight() const {
 }
 
 void OpenglTexture2D::Bind(int slot) const {
+    PROFILE_FUNCTION();
+
     glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(GL_TEXTURE_2D, renderer_id_);
 }

@@ -46,7 +46,6 @@ private:
     void WriteFooter();
 
     std::ofstream output_stream_;
-    int profile_count_ = 0;
 };
 
 #if PROFILING
@@ -55,7 +54,10 @@ private:
 #define PROFILE_SCOPE(name) chernoengine2::InstrumentationTimer timer##__LINE__(name)
 #define PROFILE_FUNCTION() PROFILE_SCOPE(__PRETTY_FUNCTION__)
 #else
+#define PROFILE_BEGIN_SESSION(filepath)
+#define PROFILE_END_SESSION()
 #define PROFILE_SCOPE(name)
+#define PROFILE_FUNCTION()
 #endif
 
 } // chernoengine2

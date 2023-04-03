@@ -6,6 +6,7 @@
 
 #include <chernoengine2/core/input.hpp>
 #include <chernoengine2/core/key_codes.hpp>
+#include <chernoengine2/debug/instrumentor.hpp>
 
 namespace chernoengine2 {
 
@@ -17,6 +18,8 @@ OrthographicCameraController::OrthographicCameraController(float aspect_ratio, b
 }
 
 void OrthographicCameraController::OnUpdate(float delta_time) {
+    PROFILE_FUNCTION();
+
 // CAMERA TRANSLATION
     if (Input::IsKeyPressed(KEY_A)) {
         camera_position_.x -= camera_translation_speed_ * delta_time;
@@ -47,12 +50,16 @@ void OrthographicCameraController::OnUpdate(float delta_time) {
 }
 
 void OrthographicCameraController::OnEvent(Event& event) {
+    PROFILE_FUNCTION();
+
     EventDispatcher dispatcher(event);
     dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolled));
     dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OrthographicCameraController::OnWindowResized));
 }
 
 bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& event) {
+    PROFILE_FUNCTION();
+
     zoom_level_ -= event.GetYoffset() * 0.25f;
     zoom_level_ = std::max(zoom_level_, 0.25f);
     camera_.SetProjection(-aspect_ratio_ * zoom_level_, aspect_ratio_ * zoom_level_, -zoom_level_, zoom_level_);
@@ -61,6 +68,8 @@ bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& event) {
 }
 
 bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& event) {
+    PROFILE_FUNCTION();
+
     aspect_ratio_ = (float) event.GetWidth() / (float) event.GetHeight();
     camera_.SetProjection(-aspect_ratio_ * zoom_level_, aspect_ratio_ * zoom_level_, -zoom_level_, zoom_level_);
 

@@ -11,12 +11,15 @@
 #include <GLFW/glfw3.h>
 
 #include <chernoengine2/core/application.hpp>
+#include <chernoengine2/debug/instrumentor.hpp>
 
 namespace chernoengine2 {
 
 ImguiLayer::ImguiLayer() : Layer("ImguiLayer") {}
 
 void ImguiLayer::OnAttach() {
+    PROFILE_FUNCTION();
+
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
@@ -45,18 +48,24 @@ void ImguiLayer::OnAttach() {
 }
 
 void ImguiLayer::OnDetach() {
+    PROFILE_FUNCTION();
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 }
 
 void ImguiLayer::Begin() {
+    PROFILE_FUNCTION();
+
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 }
 
 void ImguiLayer::End() {
+    PROFILE_FUNCTION();
+
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     Application& app = Application::GetInstance();
     io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());

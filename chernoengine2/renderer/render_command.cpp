@@ -3,7 +3,8 @@
 //
 
 #include <chernoengine2/renderer/render_command.hpp>
-#include <chernoengine2/opengl/opengl_renderer_api.hpp>
+
+#include <chernoengine2/debug/instrumentor.hpp>
 
 namespace chernoengine2 {
 

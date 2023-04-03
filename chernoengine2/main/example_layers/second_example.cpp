@@ -19,10 +19,14 @@ SecondExample::SecondExample() :
         camera_controller_(1280.0f / 720.0f) {}
 
 void SecondExample::OnAttach() {
+    PROFILE_FUNCTION();
+
     chessboard_texture_ = Texture2D::Create("assets/textures/checkerboard.png");
 }
 
 void SecondExample::OnDetach() {
+    PROFILE_FUNCTION();
+    
     Layer::OnDetach();
 }
 
@@ -30,10 +34,7 @@ void SecondExample::OnUpdate(float delta_time) {
     PROFILE_FUNCTION();
 
     // update
-    {
-        PROFILE_SCOPE("CameraController::OnUpdate");
-        camera_controller_.OnUpdate(delta_time);
-    }
+    camera_controller_.OnUpdate(delta_time);
 
     // renderer
     {

@@ -24,6 +24,8 @@ private:
 
 } // chernoengine2
 
+#define INIT_LOG() chernoengine2::Log::Init()
+
 #define LOG_CORE_TRACE(...) chernoengine2::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define LOG_CORE_INFO(...) chernoengine2::Log::GetCoreLogger()->info(__VA_ARGS__)
 #define LOG_CORE_WARN(...) chernoengine2::Log::GetCoreLogger()->warn(__VA_ARGS__)

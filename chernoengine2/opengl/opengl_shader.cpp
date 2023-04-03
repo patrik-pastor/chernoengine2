@@ -10,6 +10,7 @@
 #include <glad/glad.h>
 
 #include <chernoengine2/core/log.hpp>
+#include <chernoengine2/debug/instrumentor.hpp>
 
 namespace chernoengine2 {
 
@@ -32,6 +33,8 @@ void OpenglShader::CheckCompileErrors(uint32_t shader_id, const std::string& typ
 }
 
 OpenglShader::OpenglShader(const std::string& filepath) {
+    PROFILE_FUNCTION();
+
     // 1. divide vertex and fragment part
     enum class ShaderType {
         NONE = -1, VERTEX = 0, FRAGMENT = 1
@@ -87,6 +90,8 @@ OpenglShader::OpenglShader(const std::string& filepath) {
 }
 
 void OpenglShader::Bind() const {
+    PROFILE_FUNCTION();
+
     glUseProgram(id_);
 }
 

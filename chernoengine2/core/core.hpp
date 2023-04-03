@@ -12,7 +12,7 @@
 
 #define BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
-#define PROFILING 1
+#define PROFILING 0
 
 namespace chernoengine2 {
 

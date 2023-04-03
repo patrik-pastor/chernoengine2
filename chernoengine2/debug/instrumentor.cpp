@@ -21,7 +21,7 @@ uint64_t Instrumentor::ConvertThreadIdToLong(const std::thread::id& id) {
 }
 
 void Instrumentor::WriteHeader() {
-    output_stream_ << "{\"otherData\": {}, \"traceEvents\":[";
+    output_stream_ << "{\"otherData\": {}, \"traceEvents\":[{}";
 }
 
 void Instrumentor::WriteFooter() {
@@ -39,12 +39,10 @@ void Instrumentor::EndSession() {
 }
 
 void Instrumentor::WriteProfile(const ProfileResult& result) {
-    if (profile_count_++ > 0)
-        output_stream_ << ",";
     std::string name = result.name;
     std::replace(name.begin(), name.end(), '"', '\'');
 
-    output_stream_ << "{";
+    output_stream_ << ",{";
     output_stream_ << "\"cat\":\"function\",";
     output_stream_ << "\"dur\":" << (result.end - result.start) << ',';
     output_stream_ << "\"name\":\"" << name << "\",";

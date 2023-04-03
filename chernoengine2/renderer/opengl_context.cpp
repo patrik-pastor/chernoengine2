@@ -5,12 +5,15 @@
 #include <chernoengine2/renderer/opengl_context.hpp>
 
 #include <chernoengine2/core/log.hpp>
+#include <chernoengine2/debug/instrumentor.hpp>
 
 namespace chernoengine2 {
 
 OpenglContext::OpenglContext(GLFWwindow *window) : window_(window) {}
 
 void OpenglContext::Init() {
+    PROFILE_FUNCTION();
+
     glfwMakeContextCurrent(window_);
     glfwSetFramebufferSizeCallback(window_, [](GLFWwindow *_, int width, int height) {
         glViewport(0, 0, width, height);
@@ -29,6 +32,8 @@ void OpenglContext::Init() {
 }
 
 void OpenglContext::SwapBuffers() {
+    PROFILE_FUNCTION();
+
     glfwSwapBuffers(window_);
 }
 

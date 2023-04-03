@@ -4,9 +4,13 @@
 
 #include <chernoengine2/opengl/opengl_vertex_array.hpp>
 
+#include <chernoengine2/debug/instrumentor.hpp>
+
 namespace chernoengine2 {
 
 OpenglVertexArray::OpenglVertexArray() {
+    PROFILE_FUNCTION();
+
     glGenVertexArrays(1, &renderer_id_);
 }
 
@@ -15,14 +19,20 @@ OpenglVertexArray::~OpenglVertexArray() {
 }
 
 void OpenglVertexArray::Bind() const {
+    PROFILE_FUNCTION();
+
     glBindVertexArray(renderer_id_);
 }
 
 void OpenglVertexArray::Unbind() const {
+    PROFILE_FUNCTION();
+
     glBindVertexArray(0);
 }
 
 void OpenglVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& buffer) {
+    PROFILE_FUNCTION();
+
     glBindVertexArray(renderer_id_);
     buffer->Bind();
 
@@ -45,6 +55,8 @@ void OpenglVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& buffer) {
 }
 
 void OpenglVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& buffer) {
+    PROFILE_FUNCTION();
+
     glBindVertexArray(renderer_id_);
     buffer->Bind();
     index_buffer_ = buffer;
