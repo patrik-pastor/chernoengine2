@@ -26,7 +26,7 @@ void SecondExample::OnAttach() {
 
 void SecondExample::OnDetach() {
     PROFILE_FUNCTION();
-    
+
     Layer::OnDetach();
 }
 
@@ -47,9 +47,9 @@ void SecondExample::OnUpdate(float delta_time) {
         PROFILE_SCOPE("Renderer draw");
         Renderer2D::BeginScene(camera_controller_.GetCamera());
         Renderer2D::BeginScene(camera_controller_.GetCamera());
-        Renderer2D::DrawQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, {0.8f, 0.2f, 0.3f, 1.0f});
+        Renderer2D::DrawRotatedQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, glm::radians(-45.0f), {0.8f, 0.2f, 0.3f, 1.0f});
         Renderer2D::DrawQuad({0.5f, -0.5f}, {0.5f, 0.75f}, {0.2f, 0.3f, 0.8f, 1.0f});
-        Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {10.0f, 10.0f}, chessboard_texture_);
+        Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {10.0f, 10.0f}, chessboard_texture_, 10.0f);
         Renderer2D::EndScene();
     }
 }

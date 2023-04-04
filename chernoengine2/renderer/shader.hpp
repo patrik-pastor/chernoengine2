@@ -23,6 +23,8 @@ public:
 
     virtual void SetInt(const std::string& name, int value) const = 0;
 
+    virtual void SetFloat(const std::string& name, float value) const = 0;
+
     virtual void SetVec3(const std::string& name, const glm::vec3& vec) const = 0;
 
     virtual void SetVec4(const std::string& name, const glm::vec4& vec) const = 0;

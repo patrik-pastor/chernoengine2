@@ -26,7 +26,7 @@ void Renderer2D::Init() {
     };
     Ref<VertexBuffer> square_vb = VertexBuffer::Create(square_vertices, sizeof(square_vertices));
     square_vb->SetLayout({
-                                 {"a_pos", ShaderDataType::Float3},
+                                 {"a_pos",      ShaderDataType::Float3},
                                  {"a_texcoord", ShaderDataType::Float2}
                          });
     data->quad_va->AddVertexBuffer(square_vb);
@@ -63,6 +63,7 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, cons
     PROFILE_FUNCTION();
 
     data->texture_shader->SetVec4("u_color", color);
+    data->texture_shader->SetFloat("u_tiling_factor", 1.0f);
     data->white_texture_->Bind();
     glm::mat4 transform =
             glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
@@ -75,10 +76,12 @@ void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, cons
     DrawQuad({position.x, position.y, 0.0f}, size, color);
 }
 
-void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture) {
+void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture,
+                          float tiling_factor, const glm::vec4& tint_color) {
     PROFILE_FUNCTION();
 
-    data->texture_shader->SetVec4("u_color", glm::vec4(1.0f));
+    data->texture_shader->SetVec4("u_color", tint_color);
+    data->texture_shader->SetFloat("u_tiling_factor", tiling_factor);
     texture->Bind();
     glm::mat4 transform =
             glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
@@ -87,8 +90,52 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, cons
     RenderCommand::DrawIndexed(data->quad_va);
 }
 
-void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture) {
-    DrawQuad({position.x, position.y, 0.0f}, size, texture);
+void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture,
+                          float tiling_factor, const glm::vec4& tint_color) {
+    DrawQuad({position.x, position.y, 0.0f}, size, texture, tiling_factor, tint_color);
 }
+
+void
+Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color) {
+    PROFILE_FUNCTION();
+
+    data->texture_shader->SetVec4("u_color", color);
+    data->texture_shader->SetFloat("u_tiling_factor", 1.0f);
+    data->white_texture_->Bind();
+    glm::mat4 transform =
+            glm::translate(glm::mat4(1.0f), position)
+            * glm::rotate(glm::mat4(1.0f), rotation, {0.0f, 0.0f, 1.0f})
+            * glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
+    data->texture_shader->SetMat4("u_transform", transform);
+    data->quad_va->Bind();
+    RenderCommand::DrawIndexed(data->quad_va);
+}
+
+void
+Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color) {
+    DrawRotatedQuad({position.x, position.y, 0.0f}, size, rotation, color);
+}
+
+void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation,
+                                 const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color) {
+    PROFILE_FUNCTION();
+
+    data->texture_shader->SetVec4("u_color", tint_color);
+    data->texture_shader->SetFloat("u_tiling_factor", tiling_factor);
+    texture->Bind();
+    glm::mat4 transform =
+            glm::translate(glm::mat4(1.0f), position)
+            * glm::rotate(glm::mat4(1.0f), rotation, {0.0f, 0.0f, 1.0f})
+            * glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
+    data->texture_shader->SetMat4("u_transform", transform);
+    data->quad_va->Bind();
+    RenderCommand::DrawIndexed(data->quad_va);
+}
+
+void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation,
+                                 const Ref<Texture2D>& texture, float tiling_factor, const glm::vec4& tint_color) {
+    DrawRotatedQuad({position.x, position.y, 0}, size, rotation, texture, tiling_factor, tint_color);
+}
+
 
 } // chernoengine2

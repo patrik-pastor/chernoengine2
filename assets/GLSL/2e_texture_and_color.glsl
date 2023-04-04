@@ -27,6 +27,6 @@ uniform float u_tiling_factor;
 
 void main()
 {
-        color = texture(u_texture, v_texcoord * 10) * u_color;
+        color = texture(u_texture, v_texcoord * u_tiling_factor) * u_color;
 }
 

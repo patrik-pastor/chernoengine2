@@ -99,6 +99,10 @@ void OpenglShader::SetInt(const std::string& name, int value) const {
     glUniform1i(glGetUniformLocation(id_, name.c_str()), value);
 }
 
+void OpenglShader::SetFloat(const std::string& name, float value) const {
+    glUniform1f(glGetUniformLocation(id_, name.c_str()), value);
+}
+
 void OpenglShader::SetVec4(const std::string& name, const glm::vec4& vec) const {
     glUniform4f(glGetUniformLocation(id_, name.c_str()), vec.x, vec.y, vec.z, vec.w);
 }
