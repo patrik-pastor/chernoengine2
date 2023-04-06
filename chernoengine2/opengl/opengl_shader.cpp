@@ -14,20 +14,20 @@
 
 namespace chernoengine2 {
 
-void OpenglShader::CheckCompileErrors(uint32_t shader_id, const std::string& type) {
+void OpenglShader::CheckCompileErrors(uint32_t shader_id, const std::string& type, const std::string& filepath) {
     int success;
     char infoLog[1024];
     if (type != "PROGRAM") {
         glGetShaderiv(shader_id, GL_COMPILE_STATUS, &success);
         if (!success) {
             glGetShaderInfoLog(shader_id, 1024, nullptr, infoLog);
-            LOG_CORE_ERROR("ERROR::SHADER::COMPILATION_ERROR of type: {0}\n{1}", type, infoLog);
+            LOG_CORE_ERROR("ERROR::SHADER::COMPILATION_ERROR of type: {0}\n{1}\nfilepath: {2}", type, infoLog, filepath);
         }
     } else {
         glGetProgramiv(shader_id, GL_LINK_STATUS, &success);
         if (!success) {
             glGetProgramInfoLog(shader_id, 1024, nullptr, infoLog);
-            LOG_CORE_ERROR("ERROR::PROGRAM_LINKING_ERROR of type: {0}\n{1}", type, infoLog);
+            LOG_CORE_ERROR("ERROR::PROGRAM_LINKING_ERROR of type: {0}\n{1}\nfilepath: {2}", type, infoLog, filepath);
         }
     }
 }
@@ -71,18 +71,18 @@ OpenglShader::OpenglShader(const std::string& filepath) {
     uint32_t vertex_id = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex_id, 1, &vertex_str, nullptr);
     glCompileShader(vertex_id);
-    CheckCompileErrors(vertex_id, "VERTEX");
+    CheckCompileErrors(vertex_id, "VERTEX", filepath);
     // 2.2.2 fragment shader
     uint32_t fragment_id = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment_id, 1, &fragment_str, nullptr);
     glCompileShader(fragment_id);
-    CheckCompileErrors(fragment_id, "FRAGMENT");
+    CheckCompileErrors(fragment_id, "FRAGMENT", filepath);
     // 2.3 shader program
     id_ = glCreateProgram();
     glAttachShader(id_, vertex_id);
     glAttachShader(id_, fragment_id);
     glLinkProgram(id_);
-    CheckCompileErrors(id_, "PROGRAM");
+    CheckCompileErrors(id_, "PROGRAM", filepath);
     LOG_CORE_TRACE("Shader linked successfully");
     // 2.4 delete the shaders as they're linked into program and no longer necessary
     glDeleteShader(vertex_id);
@@ -114,7 +114,6 @@ void OpenglShader::SetVec3(const std::string& name, const glm::vec3& vec) const 
 void OpenglShader::SetMat4(const std::string& name, const glm::mat4& mat) const {
     glUniformMatrix4fv(glGetUniformLocation(id_, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }
-
 
 
 } // chernoengine2

@@ -28,7 +28,7 @@ public:
     void SetMat4(const std::string& name, const glm::mat4& mat) const override;
 
 private:
-    void CheckCompileErrors(uint32_t shader_id, const std::string &type);
+    static void CheckCompileErrors(uint32_t shader_id, const std::string &type, const std::string& filepath);
 
     uint32_t id_;
 };
