@@ -21,13 +21,13 @@ void OpenglShader::CheckCompileErrors(uint32_t shader_id, const std::string& typ
         glGetShaderiv(shader_id, GL_COMPILE_STATUS, &success);
         if (!success) {
             glGetShaderInfoLog(shader_id, 1024, nullptr, infoLog);
-            LOG_CORE_ERROR("ERROR::SHADER::COMPILATION_ERROR of type: {0}\n{1}\nfilepath: {2}", type, infoLog, filepath);
+            LOG_CORE_ERROR("ERROR::SHADER::COMPILATION_ERROR of type: {0}\n{1}filepath: {2}", type, infoLog, filepath);
         }
     } else {
         glGetProgramiv(shader_id, GL_LINK_STATUS, &success);
         if (!success) {
             glGetProgramInfoLog(shader_id, 1024, nullptr, infoLog);
-            LOG_CORE_ERROR("ERROR::PROGRAM_LINKING_ERROR of type: {0}\n{1}\nfilepath: {2}", type, infoLog, filepath);
+            LOG_CORE_ERROR("ERROR::PROGRAM_LINKING_ERROR of type: {0}\n{1}filepath: {2}", type, infoLog, filepath);
         }
     }
 }

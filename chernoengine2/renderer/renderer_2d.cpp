@@ -37,7 +37,7 @@ void Renderer2D::Init() {
     uint32_t white_texture_data = 0xffffffff;
     data->white_texture_->SetData(&white_texture_data);
 
-    data->texture_shader = Shader::Create("assets/GLSL/2e_texture_and_color.glsl");
+    data->texture_shader = Shader::Create("assets/GLSL/texture_and_color.glsl");
     data->texture_shader->Bind();
     data->texture_shader->SetInt("u_texture", 0);
 }

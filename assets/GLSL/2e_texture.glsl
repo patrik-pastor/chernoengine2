@@ -22,9 +22,11 @@ in vec2 v_texcoord;
 out vec4 color;
 
 uniform sampler2D u_texture;
+uniform vec4 u_color;
+uniform float u_tiling_factor;
 
 void main()
 {
-        color = texture(u_texture, v_texcoord * 10.0);
+        color = texture(u_texture, v_texcoord * u_tiling_factor) * u_color;
 }
 
