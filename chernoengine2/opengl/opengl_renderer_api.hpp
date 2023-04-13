@@ -17,7 +17,7 @@ public:
 
     void Clear() override;
 
-    void DrawIndexed(const Ref<VertexArray>& vertex_array) override;
+    void DrawIndexed(const Ref<VertexArray>& vertex_array, int index_count = 0) override;
 };
 
 } // chernoengine2

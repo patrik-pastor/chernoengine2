@@ -16,7 +16,7 @@ class RenderCommand {
 public:
     static void Init();
 
-    static void DrawIndexed(const Ref<VertexArray>& vertex_array);
+    static void DrawIndexed(const Ref<VertexArray>& vertex_array, int index_count = 0);
 
     static void SetClearColor(const glm::vec4& color);
 

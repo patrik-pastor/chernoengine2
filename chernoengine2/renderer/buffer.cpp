@@ -20,6 +20,17 @@ Ref<VertexBuffer> VertexBuffer::Create(float *vertices, int size) {
     return nullptr;
 }
 
+Ref<VertexBuffer> VertexBuffer::Create(int size) {
+    switch (Renderer::GetRendererApi()) {
+        case RendererApi::Api::NONE:
+            LOG_CORE_ERROR("RendererApi::NONE is currently not supported");
+        case RendererApi::Api::OPENGL:
+            return CreateRef<OpenglVertexBuffer>(size);
+    }
+    LOG_CORE_ERROR("Unknown RendererApi");
+    return nullptr;
+}
+
 Ref<IndexBuffer> IndexBuffer::Create(int *indices, int count) {
     switch (Renderer::GetRendererApi()) {
         case RendererApi::Api::NONE:

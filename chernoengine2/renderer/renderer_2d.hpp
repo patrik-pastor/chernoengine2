@@ -24,6 +24,8 @@ public:
 
     static void EndScene();
 
+    static void Flush();
+
     // primitives
     static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
 
@@ -48,12 +50,6 @@ public:
     static void
     DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture,
                     float tiling_factor = 1.0, const glm::vec4& tint_color = glm::vec4(1.0f));
-};
-
-struct Renderer2DStorage {
-    Ref<VertexArray> quad_va;
-    Ref<Shader> texture_shader;
-    Ref<Texture2D> white_texture_;
 };
 
 } // chernoengine2

@@ -15,11 +15,15 @@ class OpenglVertexBuffer : public VertexBuffer {
 public:
     OpenglVertexBuffer(float *vertices, int size);
 
+    explicit OpenglVertexBuffer(int size);
+
     ~OpenglVertexBuffer() override;
 
     void Bind() const override;
 
     void UnBind() const override;
+
+    void SetData(void *data, int size) const override;
 
     void SetLayout(const BufferLayout& layout) override;
 

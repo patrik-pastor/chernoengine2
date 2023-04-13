@@ -46,10 +46,10 @@ void SecondExample::OnUpdate(float delta_time) {
     {
         PROFILE_SCOPE("Renderer draw");
         Renderer2D::BeginScene(camera_controller_.GetCamera());
-        Renderer2D::BeginScene(camera_controller_.GetCamera());
-        Renderer2D::DrawRotatedQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, glm::radians(-45.0f), {0.8f, 0.2f, 0.3f, 1.0f});
+//        Renderer2D::DrawRotatedQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, glm::radians(-45.0f), {0.8f, 0.2f, 0.3f, 1.0f});
+        Renderer2D::DrawQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, {0.8f, 0.2f, 0.3f, 1.0f});
         Renderer2D::DrawQuad({0.5f, -0.5f}, {0.5f, 0.75f}, {0.2f, 0.3f, 0.8f, 1.0f});
-        Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {10.0f, 10.0f}, chessboard_texture_, 10.0f);
+//        Renderer2D::DrawQuad({0.0f, 0.0f, -0.1f}, {10.0f, 10.0f}, chessboard_texture_, 10.0f);
         Renderer2D::EndScene();
     }
 }
@@ -57,9 +57,9 @@ void SecondExample::OnUpdate(float delta_time) {
 void SecondExample::OnImguiRender() {
     PROFILE_FUNCTION();
 
-    ImGui::Begin("Settings");
-    ImGui::ColorEdit4("Square Color", glm::value_ptr(square_color_));
-    ImGui::End();
+//    ImGui::Begin("Settings");
+//    ImGui::ColorEdit4("Square Color", glm::value_ptr(square_color_));
+//    ImGui::End();
 }
 
 void SecondExample::OnEvent(Event& event) {

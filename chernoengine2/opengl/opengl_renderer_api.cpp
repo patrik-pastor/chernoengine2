@@ -31,10 +31,11 @@ void OpenglRendererApi::Clear() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void OpenglRendererApi::DrawIndexed(const Ref<VertexArray>& vertex_array) {
+void OpenglRendererApi::DrawIndexed(const Ref<VertexArray>& vertex_array, int index_count) {
     PROFILE_FUNCTION();
 
-    glDrawElements(GL_TRIANGLES, vertex_array->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+    int count = index_count ? index_count : vertex_array->GetIndexBuffer()->GetCount();
+    glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 }
 
 

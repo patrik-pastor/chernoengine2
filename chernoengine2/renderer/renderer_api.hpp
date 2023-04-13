@@ -26,7 +26,7 @@ public:
 
     virtual void Clear() = 0;
 
-    virtual void DrawIndexed(const Ref<VertexArray>& vertex_array) = 0;
+    virtual void DrawIndexed(const Ref<VertexArray>& vertex_array, int index_count = 0) = 0;
 
     static Api GetApi();
 

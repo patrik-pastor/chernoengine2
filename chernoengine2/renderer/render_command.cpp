@@ -14,8 +14,8 @@ void RenderCommand::Init() {
 
 Scope<RendererApi> RenderCommand::renderer_api_ = RendererApi::Create();
 
-void RenderCommand::DrawIndexed(const Ref<VertexArray>& vertex_array) {
-    renderer_api_->DrawIndexed(vertex_array);
+void RenderCommand::DrawIndexed(const Ref<VertexArray>& vertex_array, int index_count) {
+    renderer_api_->DrawIndexed(vertex_array, index_count);
 }
 
 void RenderCommand::SetClearColor(const glm::vec4& color) {
