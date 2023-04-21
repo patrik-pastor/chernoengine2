@@ -19,9 +19,15 @@ public:
 
     virtual int GetHeight() const = 0;
 
+    virtual int GetId() const = 0;
+
     virtual void SetData(void *data) = 0;
 
     virtual void Bind(int slot = 0) const = 0;
+
+    virtual void BindToArray(int slot) const = 0;
+
+    virtual bool operator==(const Texture& rhs) const = 0;
 };
 
 class Texture2D : public Texture {
