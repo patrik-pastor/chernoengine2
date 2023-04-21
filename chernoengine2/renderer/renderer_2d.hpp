@@ -50,6 +50,28 @@ public:
     static void
     DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture,
                     float tiling_factor = 1.0, const glm::vec4& tint_color = glm::vec4(1.0f));
+
+    struct Statistics {
+        int draw_calls = 0;
+        int quad_count = 0;
+
+        int GetTotalVertexCount() const {
+            return quad_count * 4;
+        }
+
+        int GetTotalIndexCount() const {
+            return quad_count * 6;
+        }
+    };
+
+    static void ResetStats();
+
+    static Statistics GetStats();
+
+private:
+    static void StartBatch();
+
+    static void NextBatch();
 };
 
 } // chernoengine2
